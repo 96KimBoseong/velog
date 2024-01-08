@@ -20,27 +20,27 @@ class PostController {
         TODO()
     }
 
-    @Operation(summary = "게시글 목록 가져오기", description = "게시글 목록을 가져옵니다.")
+    @Operation(summary = "게시글 목록 조회", description = "게시글 목록을 가져옵니다.")
     @GetMapping
     fun getPostList(){
         TODO()
     }
 
 
-    @Operation(summary = "게시글 가져오기", description = "id를 이용하여 조회합니다.")
+    @Operation(summary = "게시글 조회", description = "postId를 이용하여 게시글을 조회합니다.")
     @GetMapping("/{postId}")
     fun getPost(){
         TODO()
     }
 
 
-    @Operation(summary = "게시글 수정", description = "id를 이용하여 게시글을 수정합니다.")
+    @Operation(summary = "게시글 수정", description = "postId를 이용하여 게시글을 수정합니다.")
     @PutMapping("/{postId}")
     fun updatePost(){
         TODO()
     }
 
-    @Operation(summary = "게시글 삭제", description = "id를 이용하여 게시글을 삭제합니다.")
+    @Operation(summary = "게시글 삭제", description = "postId를 이용하여 게시글을 삭제합니다.")
     @DeleteMapping("/{postId}")
     fun deletePost(){
         TODO()

@@ -16,7 +16,7 @@ class CommentController {
         TODO()
     }
     
-    @Operation(summary = "댓글 목록 가져오기", description = "댓글 목록을 가져옵니다.")
+    @Operation(summary = "댓글 목록 조회", description = "댓글 목록을 가져옵니다.")
     @GetMapping
     fun getCommentList(){
         TODO()
