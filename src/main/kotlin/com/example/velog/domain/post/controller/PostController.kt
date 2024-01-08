@@ -1,9 +1,10 @@
 package com.example.velog.domain.post.controller
 
-import com.example.velog.domain.post.dto.PostCreateRequestDto
+import com.example.velog.domain.post.dto.CreatePostRequestDto
+import com.example.velog.domain.post.dto.GetAllPostRequestDto
 import com.example.velog.domain.post.dto.PostResponseDto
 import com.example.velog.domain.post.service.PostService
-import com.example.velog.domain.post.dto.PostUpdateRequestDto
+import com.example.velog.domain.post.dto.UpdatePostRequestDto
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.HttpStatus
@@ -34,7 +35,9 @@ class PostController(
     * Service Layer로부터 PostResponseDto DTO를 받아서 ResponseEntity로 감싸고 응답*/
     @Operation(summary = "게시글 작성", description = "게시글을 작성합니다.") //Swagger에서 확인할 수 있도록 설명 추가
     @PostMapping //Post 메소드 핸들링, /posts에 접근한다.
-    fun createPost(requestDto: PostCreateRequestDto): ResponseEntity<PostResponseDto>{
+    fun createPost(
+        requestDto: CreatePostRequestDto
+    ): ResponseEntity<PostResponseDto>{
         return ResponseEntity
             .status(HttpStatus.CREATED) //생성 성공하면 201 Created 상태 코드 반환
             .body(postService.createPost(requestDto))
@@ -44,10 +47,12 @@ class PostController(
     * Service Layer로부터 PostResponseDto DTO를 받아서 ResponseEntity로 감싸고 응답*/
     @Operation(summary = "게시글 목록 조회", description = "게시글 목록을 가져옵니다.") //Swagger에서 확인할 수 있도록 설명 추가
     @GetMapping //Get 메소드 핸들링, /posts에 접근한다.
-    fun getPostList(): ResponseEntity<List<PostResponseDto>>{
+    fun getPostList(
+        requestDto: GetAllPostRequestDto
+    ): ResponseEntity<List<PostResponseDto>>{
         return ResponseEntity
             .status(HttpStatus.OK) //조회 성공하면 200 OK 상태 코드 반환
-            .body(postService.getPostList())
+            .body(postService.getPostList(requestDto))
     }
 
     /* 선택한 게시글을 가져오는 메소드
@@ -70,7 +75,7 @@ class PostController(
     @PutMapping("/{postId}") //Post 메소드 핸들링, /posts/{postId}에 접근한다.
     fun updatePost(
         @PathVariable postId: Long,
-        requestDto: PostUpdateRequestDto
+        requestDto: UpdatePostRequestDto
     ): ResponseEntity<PostResponseDto>{
         return ResponseEntity
             .status(HttpStatus.OK) //조회 성공하면 200 OK 상태 코드 반환

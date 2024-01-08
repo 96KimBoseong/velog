@@ -1,6 +1,6 @@
 package com.example.velog.domain.post.model
 
-import com.example.velog.domain.post.dto.PostCreateRequestDto
+import com.example.velog.domain.post.dto.CreatePostRequestDto
 import com.example.velog.domain.post.dto.PostResponseDto
 import jakarta.persistence.*
 import java.time.LocalDateTime
@@ -25,7 +25,7 @@ class PostEntity private constructor( //데이터베이스에서 데이터를 �
 
     companion object{
         fun toEntity( //Request를 PostEntity로 변환하는 메소드
-            requestDto: PostCreateRequestDto
+            requestDto: CreatePostRequestDto
         ): PostEntity{
            return PostEntity(
                title = requestDto.title,

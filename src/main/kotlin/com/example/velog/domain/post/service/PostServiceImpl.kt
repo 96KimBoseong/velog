@@ -1,11 +1,14 @@
 package com.example.velog.domain.post.service
 
 import com.example.velog.domain.post.repository.PostRepository
-import com.example.velog.domain.post.dto.PostCreateRequestDto
+import com.example.velog.domain.post.dto.CreatePostRequestDto
+import com.example.velog.domain.post.dto.GetAllPostRequestDto
 import com.example.velog.domain.post.dto.PostResponseDto
-import com.example.velog.domain.post.dto.PostUpdateRequestDto
+import com.example.velog.domain.post.dto.UpdatePostRequestDto
 import com.example.velog.domain.post.model.PostEntity
 import com.teamsparta.mytodolist.domain.exception.ModelNotFoundException
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Sort
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
@@ -15,14 +18,17 @@ class PostServiceImpl(
 ): PostService {
 
     //게시글을 생성하는 메소드
-    override fun createPost(requestDto: PostCreateRequestDto): PostResponseDto {
+    override fun createPost(requestDto: CreatePostRequestDto): PostResponseDto {
         val postEntity = PostEntity.toEntity(requestDto)
         return PostEntity.toResponse(postRepository.save(postEntity))
     }
 
     //모든 게시글 목록을 가져오는 메소드
-    override fun getPostList(): List<PostResponseDto> {
-        return postRepository.findAll().map{PostEntity.toResponse(it)}
+    override fun getPostList(
+        requestDto: GetAllPostRequestDto
+    ): List<PostResponseDto> {
+        return if(requestDto.sortByDescend) postRepository.findAllByOrderByCreateAtDesc().map{PostEntity.toResponse(it)}
+        else postRepository.findAllByOOrderByCreateAt().map { PostEntity.toResponse(it) }
     }
 
     //id에 해당하는 게시글을 가져하는 메소드
@@ -34,7 +40,7 @@ class PostServiceImpl(
     //id에 해당하는 게시글을 수정하는 메소드
     override fun updatePost(
         postId: Long,
-        requestDto: PostUpdateRequestDto
+        requestDto: UpdatePostRequestDto
     ): PostResponseDto {
         val postEntity = postRepository.findByIdOrNull(postId) ?: throw ModelNotFoundException("post", postId)
         postEntity.title = requestDto.title

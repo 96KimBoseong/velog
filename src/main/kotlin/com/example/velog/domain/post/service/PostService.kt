@@ -1,8 +1,9 @@
 package com.example.velog.domain.post.service
 
-import com.example.velog.domain.post.dto.PostCreateRequestDto
+import com.example.velog.domain.post.dto.CreatePostRequestDto
+import com.example.velog.domain.post.dto.GetAllPostRequestDto
 import com.example.velog.domain.post.dto.PostResponseDto
-import com.example.velog.domain.post.dto.PostUpdateRequestDto
+import com.example.velog.domain.post.dto.UpdatePostRequestDto
 
 /*
 * Spring의 Layer의 일부
@@ -13,17 +14,17 @@ import com.example.velog.domain.post.dto.PostUpdateRequestDto
 interface PostService {
     
     //게시글을 생성하는 메소드
-    fun createPost(requestDto: PostCreateRequestDto): PostResponseDto
+    fun createPost(requestDto: CreatePostRequestDto): PostResponseDto
 
     //모든 게시글 목록을 가져오는 메소드
-    fun getPostList(): List<PostResponseDto>
+    fun getPostList(requestDto: GetAllPostRequestDto): List<PostResponseDto>
 
     //id에 해당하는 게시글을 가져오는 메소드
     
     fun getPost(postId: Long): PostResponseDto
 
     //id에 해당하는 게시글을 수정하는 메소드
-    fun updatePost(postId: Long, requestDto: PostUpdateRequestDto): PostResponseDto
+    fun updatePost(postId: Long, requestDto: UpdatePostRequestDto): PostResponseDto
 
     //id에 해당하는 게시글을 삭제하는 메소드
     fun deletePost(postId: Long)

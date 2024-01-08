@@ -6,7 +6,7 @@ package com.example.velog.domain.post.dto
 * 요청(Request)과 응답(Response) 또한 DTO로 표현 가능
 * 작성글 생성 요청(request)을 전달하는 클래스
 */
-data class PostCreateRequestDto(
+data class CreatePostRequestDto(
     val title: String, //작성할 게시글 제목
     val content: String //작성할 게시글 내용
 )
