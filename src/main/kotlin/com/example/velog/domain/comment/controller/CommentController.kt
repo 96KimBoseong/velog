@@ -28,6 +28,8 @@ class CommentController {
         @DeleteMapping("/{commentId}")
         fun deletePost(){
             TODO()
+
+            //야호
         }
 
 
