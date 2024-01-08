@@ -28,7 +28,7 @@ class PostServiceImpl(
         requestDto: GetAllPostRequestDto
     ): List<PostResponseDto> {
         return if(requestDto.sortByDescend) postRepository.findAllByOrderByCreateAtDesc().map{PostEntity.toResponse(it)}
-        else postRepository.findAllByOOrderByCreateAt().map { PostEntity.toResponse(it) }
+        else postRepository.findAllByOrderByCreateAt().map { PostEntity.toResponse(it) }
     }
 
     //id에 해당하는 게시글을 가져하는 메소드

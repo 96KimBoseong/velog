@@ -14,5 +14,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 interface PostRepository: JpaRepository<PostEntity, Long> {
     fun findAllByOrderByCreateAtDesc(): List<PostEntity>
 
-    fun findAllByOOrderByCreateAt(): List<PostEntity>
+    fun findAllByOrderByCreateAt(): List<PostEntity>
 }
