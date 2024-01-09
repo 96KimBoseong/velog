@@ -10,7 +10,6 @@ class TrendServiceImpl(
     private val trendRepository: TrendRepository
 ):TrendService {
     override fun getTrendList(): List<PostResponseDto> {
-        val entityList = trendRepository.findAllByOrderByViewsDesc()
-        return entityList.map{ PostEntity.toResponse(it)}
+        return trendRepository.findAllByOrderByViewsDesc().map{ PostEntity.toResponse(it)}
     }
 }

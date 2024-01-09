@@ -12,7 +12,4 @@ import org.springframework.data.jpa.repository.JpaRepository
 * Java 및 kotlin 객체를 사용해서 DB에 대해 CRUD를 쉽게 할 수 있도록 하는 JPA를 사용해서 DB와 통신
 */
 interface PostRepository: JpaRepository<PostEntity, Long> {
-    fun findAllByOrderByCreateAtDesc(): List<PostEntity>
-
-    fun findAllByOrderByViewsDesc(): List<PostEntity>
 }
