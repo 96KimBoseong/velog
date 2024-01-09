@@ -27,9 +27,12 @@ class PostServiceImpl(
     override fun getPostList(
         requestDto: GetAllPostRequestDto
     ): List<PostResponseDto> {
-        val entityList = if(requestDto.sortBy == "views") postRepository.findAllByOrderByViewsDesc()
-        else postRepository.findAllByOrderByCreateAtDesc()
-
+        val entityList =
+            when(requestDto.sortBy){
+                "hot" -> postRepository.findAllByOrderByViewsDesc()
+                "new" -> postRepository.findAllByOrderByCreateAtDesc()
+                else -> throw IllegalStateException("error")
+            }
         return entityList.map{PostEntity.toResponse((it))}
     }
 
