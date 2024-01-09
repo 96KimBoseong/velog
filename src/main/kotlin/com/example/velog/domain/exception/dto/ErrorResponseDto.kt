@@ -1,4 +1,4 @@
-package com.teamsparta.mytodolist.domain.exception.dto
+package com.example.velog.domain.exception.dto
 
 //DTO: 각 Layer 사이의 데이터를 전달하는데 사용
 //응답(Request)과 요청(Response) 또한 DTO로 표현 가능

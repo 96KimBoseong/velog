@@ -6,9 +6,7 @@ import com.example.velog.domain.post.dto.GetAllPostRequestDto
 import com.example.velog.domain.post.dto.PostResponseDto
 import com.example.velog.domain.post.dto.UpdatePostRequestDto
 import com.example.velog.domain.post.model.PostEntity
-import com.teamsparta.mytodolist.domain.exception.ModelNotFoundException
-import org.springframework.data.domain.PageRequest
-import org.springframework.data.domain.Sort
+import com.example.velog.domain.exception.ModelNotFoundException
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 

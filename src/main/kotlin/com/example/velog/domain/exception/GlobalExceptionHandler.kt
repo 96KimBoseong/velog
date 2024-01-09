@@ -1,6 +1,6 @@
-package com.teamsparta.mytodolist.domain.exception
+package com.example.velog.domain.exception
 
-import com.teamsparta.mytodolist.domain.exception.dto.ErrorResponseDto
+import com.example.velog.domain.exception.dto.ErrorResponseDto
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ExceptionHandler
