@@ -1,7 +1,6 @@
 package com.example.velog.domain.post.service
 
 import com.example.velog.domain.post.dto.CreatePostRequestDto
-import com.example.velog.domain.post.dto.GetAllPostRequestDto
 import com.example.velog.domain.post.dto.PostResponseDto
 import com.example.velog.domain.post.dto.UpdatePostRequestDto
 
@@ -17,7 +16,7 @@ interface PostService {
     fun createPost(requestDto: CreatePostRequestDto): PostResponseDto
 
     //모든 게시글 목록을 가져오는 메소드
-    fun getPostList(requestDto: GetAllPostRequestDto): List<PostResponseDto>
+//    fun getPostList(requestDto: GetAllPostRequestDto): List<PostResponseDto>
 
     //id에 해당하는 게시글을 가져오는 메소드
     fun getPost(postId: Long): PostResponseDto
@@ -27,5 +26,7 @@ interface PostService {
 
     //id에 해당하는 게시글을 삭제하는 메소드
     fun deletePost(postId: Long)
+
+    fun textValidation(text: String, type: String): Boolean
 
 }
