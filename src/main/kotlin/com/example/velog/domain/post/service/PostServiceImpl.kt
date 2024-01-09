@@ -53,7 +53,7 @@ class PostServiceImpl(
         val postEntity = postRepository.findByIdOrNull(postId) ?: throw ModelNotFoundException("post", postId)
         postEntity.title = requestDto.title
         postEntity.content = requestDto.content
-        postEntity.updateName = requestDto.name
+        postEntity.updateName = requestDto.updateName
 
         return PostEntity.toResponse(postRepository.save(postEntity))
     }
