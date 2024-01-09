@@ -28,21 +28,7 @@ class PostServiceImpl(
         return PostEntity.toResponse(postRepository.save(postEntity))
     }
 
-    //모든 게시글 목록을 가져오는 메소드
-<<<<<<< HEAD
-    override fun getPostList(
-        requestDto: GetAllPostRequestDto
-    ): List<PostResponseDto> {
-        val entityList =
-            when(requestDto.sortBy){
-                "hot" -> postRepository.findAllByOrderByViewsDesc()
-                "new" -> postRepository.findAllByOrderByCreateAtDesc()
-                else -> throw IllegalStateException("error")
-            }
-        return entityList.map{PostEntity.toResponse((it))}
-    }
-    // my_feed -> user가 필요
-=======
+
 //    override fun getPostList(
 //        requestDto: GetAllPostRequestDto
 //    ): List<PostResponseDto> {
@@ -55,7 +41,7 @@ class PostServiceImpl(
 //        return entityList.map{PostEntity.toResponse((it))}
 //    }
 
->>>>>>> ff9a70c56c2f8c187cccc470f78d8ba1bb9c292b
+
 
     //id에 해당하는 게시글을 가져하는 메소드
     override fun getPost(postId: Long): PostResponseDto {
