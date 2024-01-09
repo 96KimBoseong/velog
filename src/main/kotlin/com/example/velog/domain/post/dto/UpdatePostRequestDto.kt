@@ -7,6 +7,7 @@ package com.example.velog.domain.post.dto
 * 작성글 수정 요청(request)을 전달하는 클래스
 */
 data class UpdatePostRequestDto(
-    var title: String, //수정한 게시글 제목
-    var content: String //수정한 게시글 내용
+    val name: String,
+    val title: String, //수정한 게시글 제목
+    val content: String //수정한 게시글 내용
 )

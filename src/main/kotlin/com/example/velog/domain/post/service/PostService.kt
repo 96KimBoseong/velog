@@ -20,7 +20,6 @@ interface PostService {
     fun getPostList(requestDto: GetAllPostRequestDto): List<PostResponseDto>
 
     //id에 해당하는 게시글을 가져오는 메소드
-    
     fun getPost(postId: Long): PostResponseDto
 
     //id에 해당하는 게시글을 수정하는 메소드
@@ -28,4 +27,5 @@ interface PostService {
 
     //id에 해당하는 게시글을 삭제하는 메소드
     fun deletePost(postId: Long)
+
 }
