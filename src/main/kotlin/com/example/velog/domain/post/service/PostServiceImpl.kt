@@ -35,7 +35,7 @@ class PostServiceImpl(
             }
         return entityList.map{PostEntity.toResponse((it))}
     }
-
+    // my_feed -> user가 필요
 
     //id에 해당하는 게시글을 가져하는 메소드
     override fun getPost(postId: Long): PostResponseDto {
