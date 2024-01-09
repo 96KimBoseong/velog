@@ -7,6 +7,7 @@ package com.example.velog.domain.post.dto
 * 작성글 생성 요청(request)을 전달하는 클래스
 */
 data class CreatePostRequestDto(
+    val createName: String, //사람 이름
     val title: String, //작성할 게시글 제목
     val content: String //작성할 게시글 내용
 )

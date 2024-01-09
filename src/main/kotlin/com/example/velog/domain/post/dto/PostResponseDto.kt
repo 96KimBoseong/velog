@@ -9,8 +9,12 @@ import java.time.LocalDateTime
 * 다른 layer로 데이터를 전달할 때(응답할 때) 사용되는 클래스
 */
 data class PostResponseDto(
-    val id: Long, //게시글 번호, DB에서 생성됨
+    val postId: Long, //게시글 번호, DB에서 생성됨
     val title: String, //게시글 제목
     val content: String, //게시글 내용
-    val createAt: LocalDateTime //작성 시간
+    val createAt: LocalDateTime, //작성 시간
+    val updateAt: LocalDateTime, //수정 시간
+    val createName: String,
+    val updateName: String,
+    val views: Int
 )

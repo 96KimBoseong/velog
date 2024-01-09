@@ -1,5 +1,5 @@
 package com.example.velog.domain.post.dto
 
 data class GetAllPostRequestDto(
-    val sortByDescend: Boolean //정렬 순서를 내림차순으로 한다면 true, 아니면 false
+    val sortBy: String //정렬 순서를 어떻게 할 건지 정하는 변수
 )
