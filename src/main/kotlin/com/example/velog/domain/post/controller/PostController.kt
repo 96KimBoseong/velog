@@ -36,18 +36,6 @@ class PostController(
             .body(postService.createPost(requestDto))
     }
 
-    /* 게시글 리스트를 가져오는 메소드
-    * Service Layer로부터 PostResponseDto DTO를 받아서 ResponseEntity로 감싸고 응답*/
-//    @Operation(summary = "게시글 목록 조회", description = "게시글 목록을 가져옵니다.") //Swagger에서 확인할 수 있도록 설명 추가
-//    @GetMapping //Get 메소드 핸들링, /posts에 접근한다.
-//    fun getPostList(
-//        requestDto: GetAllPostRequestDto
-//    ): ResponseEntity<List<PostResponseDto>>{
-//        return ResponseEntity
-//            .status(HttpStatus.OK) //조회 성공하면 200 OK 상태 코드 반환
-//            .body(postService.getPostList(requestDto))
-//    }
-
     /* 선택한 게시글을 가져오는 메소드
     * postId를 argument로 받음
     * Service Layer로부터 PostResponseDto DTO를 받아서 ResponseEntity로 감싸고 응답*/

@@ -15,9 +15,6 @@ interface PostService {
     //게시글을 생성하는 메소드
     fun createPost(requestDto: CreatePostRequestDto): PostResponseDto
 
-    //모든 게시글 목록을 가져오는 메소드
-//    fun getPostList(requestDto: GetAllPostRequestDto): List<PostResponseDto>
-
     //id에 해당하는 게시글을 가져오는 메소드
     fun getPost(postId: Long): PostResponseDto
 
