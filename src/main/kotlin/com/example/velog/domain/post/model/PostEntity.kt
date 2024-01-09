@@ -1,5 +1,6 @@
 package com.example.velog.domain.post.model
 
+import com.example.velog.domain.comment.model.CommentEntity
 import com.example.velog.domain.post.dto.CreatePostRequestDto
 import com.example.velog.domain.post.dto.PostResponseDto
 import jakarta.persistence.*
@@ -26,6 +27,8 @@ class PostEntity private constructor( //데이터베이스에서 데이터를 �
     @Column(name = "update_name") //매핑할 테이블의 컬럼을 정의
     var updateName: String, //변경한 사람 이름은 수정 가능, null 허용 X
 
+    val comment: List<CommentEntity> = emptyList()
+
 ) {
     @Id //PK 설정
     @GeneratedValue(strategy = GenerationType.IDENTITY) //데이터베이스에서 ID를 자동으로 생성
@@ -41,6 +44,7 @@ class PostEntity private constructor( //데이터베이스에서 데이터를 �
 
     @Column(name = "views") //매핑할 테이블의 컬럼을 정의
     var views: Int = 0 //조회수는 수정 가능, null 허용 X, 기본값은 0
+
 
     companion object{
         fun toEntity( //Request를 PostEntity로 변환하는 메소드
