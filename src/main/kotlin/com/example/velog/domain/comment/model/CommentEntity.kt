@@ -1,4 +1,5 @@
 package com.example.velog.domain.comment.model
+import com.example.velog.domain.comment.dto.UpdateCommentArguments
 import com.example.velog.domain.post.model.PostEntity
 import jakarta.persistence.*
 import org.springframework.data.annotation.CreatedDate
@@ -18,14 +19,14 @@ class CommentEntity(
     val createName: String,
 
     @Column(name = "update_name")
-    val updateName: String,
+    var updateName: String,
 
     @Column
     val postId: Long
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null
+    val commentId: Long? = null
 
     @CreatedDate
     @Column(name = "create_at")
@@ -35,9 +36,9 @@ class CommentEntity(
     @Column(name = "update_at")
     var updateAt: LocalDateTime? = null
 
-    fun changeContent(content: String) {
-        this.content = content
+    fun changeUpdateComment(updateCommentArguments: UpdateCommentArguments) {
+        this.content = updateCommentArguments.content
+        this.updateName = updateCommentArguments.updateName
     }
-
 
 }

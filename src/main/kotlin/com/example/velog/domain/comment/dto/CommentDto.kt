@@ -8,15 +8,19 @@ data class CommentDto(
     val id: Long?,
     val content: String,
     val createAt: LocalDateTime?,
+    val updateAt: LocalDateTime?,
+    val updateName: String,
     val createName: String,
     val postId: Long?
 ) {
     companion object {
         fun from(comment: CommentEntity): CommentDto {
             return CommentDto(
-                id = comment.id,
+                id = comment.commentId,
                 content = comment.content,
                 createAt = comment.createAt,
+                updateName = comment.updateName,
+                updateAt = comment.updateAt,
                 createName = comment.createName,
                 postId = comment.postId ?: throw Exception("target post not found")
             )
