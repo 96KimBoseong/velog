@@ -2,6 +2,7 @@ package com.example.velog.domain.user.service
 
 import com.example.velog.domain.user.dto.UserResponseDto
 import com.example.velog.domain.user.dto.UserSignUpDto
+import com.example.velog.domain.user.dto.UserUpdateDto
 import com.example.velog.domain.user.model.UserEntity
 import com.example.velog.domain.user.repository.UserRepository
 import org.springframework.stereotype.Service
@@ -28,6 +29,10 @@ class UserServiceImpl(
         // UserEntity() -> userSignUpDto안에 값으로 UserEntity라는 객체를 생성
         //하고 확장함수인 toResponse를 사용하여 ResponseDto로 이것들의 값을 전달
         //컨트롤러 <-> dto <-> 서비스 <-> entity <-> 레포지토리
+    }
+
+    override fun userUpdate(userUpdateDto: UserUpdateDto): UserResponseDto {
+        TODO("Not yet implemented")
     }
 }
 fun UserEntity.toResponse():UserResponseDto{

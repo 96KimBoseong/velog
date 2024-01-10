@@ -36,6 +36,11 @@ class UserController(
 //    fun updateUserProfile(){
 //
 //    }
+    @Operation(summary = "사용자 정보 수정", description = "프로필 정보 수정")
+    @PutMapping("/users/{userId}")
+    fun profileUpdate(){
+        TODO()
+    }
 
 
 }
