@@ -1,44 +1,41 @@
 package com.example.velog.domain.comment.model
-
-import com.example.velog.domain.post.model.PostEntity
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
-import jakarta.persistence.Table
+import jakarta.persistence.*
+import org.springframework.data.annotation.CreatedDate
+import org.springframework.data.annotation.LastModifiedDate
+import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import java.time.LocalDateTime
 
+@EntityListeners(AuditingEntityListener::class)
 @Entity
 @Table(name = "Comment")
 class CommentEntity(
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null,
 
     @Column
     var content: String,
+    @Column(name = "create_name")
+    val createName: String,
+
+    @Column(name = "update_name")
+    val updateName: String,
 
     @Column
-    val create_at: LocalDateTime,
-
-    @Column
-    val update_at: LocalDateTime,
-
-    @Column
-    val create_name: String,
-
-    @Column
-    val update_name: String,
-
-    @Column
-    val postId: Long,
-
-    val post: PostEntity
-
-    // 게시글과 댓글 연관 작성해야함.
+    val postId: Long
 ) {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val id: Long? = null
+
+    @CreatedDate
+    @Column(name = "create_at")
+    var createAt: LocalDateTime? = null
+
+    @LastModifiedDate
+    @Column(name = "update_at")
+    var updateAt: LocalDateTime? = null
+
     fun changeContent(content: String) {
         this.content = content
     }
+
+
 }

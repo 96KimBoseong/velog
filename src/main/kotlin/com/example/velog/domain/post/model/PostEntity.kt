@@ -27,6 +27,7 @@ class PostEntity private constructor( //데이터베이스에서 데이터를 �
     @Column(name = "update_name") //매핑할 테이블의 컬럼을 정의
     var updateName: String, //변경한 사람 이름은 수정 가능, null 허용 X
 
+    @OneToMany
     val comment: List<CommentEntity> = emptyList()
 
 ) {
@@ -49,13 +50,13 @@ class PostEntity private constructor( //데이터베이스에서 데이터를 �
     companion object{
         fun toEntity( //Request를 PostEntity로 변환하는 메소드
             requestDto: CreatePostRequestDto
-        ): PostEntity{
-           return PostEntity(
-               title = requestDto.title,
-               content = requestDto.content,
-               createName = requestDto.createName,
-               updateName = requestDto.createName
-           )
+        ): PostEntity {
+            return PostEntity(
+                title = requestDto.title,
+                content = requestDto.content,
+                createName = requestDto.createName,
+                updateName = requestDto.createName
+            )
         }
         fun toResponse( //PostEntity를 Request로 변환하는 메소드
             postEntity: PostEntity

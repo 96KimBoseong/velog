@@ -7,7 +7,7 @@ import java.time.LocalDateTime
 data class CommentDto(
     val id: Long?,
     val content: String,
-    val createAt: LocalDateTime,
+    val createAt: LocalDateTime?,
     val createName: String,
     val postId: Long?
 ) {
@@ -16,8 +16,8 @@ data class CommentDto(
             return CommentDto(
                 id = comment.id,
                 content = comment.content,
-                createAt = comment.create_at,
-                createName = comment.create_name,
+                createAt = comment.createAt,
+                createName = comment.createName,
                 postId = comment.postId ?: throw Exception("target post not found")
             )
         }

@@ -24,7 +24,6 @@ class CommentController(
         @RequestBody creatCommentArguments: CreatCommentArguments,
     ): ResponseEntity<CommentDto> {
         val result = commentService.createComment(creatCommentArguments)
-
         return ResponseEntity
             .status(HttpStatus.CREATED)
             .body(result)

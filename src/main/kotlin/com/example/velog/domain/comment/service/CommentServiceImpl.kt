@@ -19,8 +19,9 @@ class CommentServiceImpl(
             ?: throw Exception("target post is not found")
         val commentEntity = CommentEntity(
             content = creatCommentArguments.content,
-            create_name = creatCommentArguments.createName,
-            postId = targetPost
+            createName = creatCommentArguments.createName,
+            updateName = "",
+            postId = targetPost.postId!!
         )
         val result = commentRepository.save(commentEntity)
         return CommentDto.from(result)
@@ -32,7 +33,7 @@ class CommentServiceImpl(
         return foundComment.let { CommentDto.from(it) }
     }
 
-    override fun findAllCommentList(): List<CommentDto>{
+    override fun findAllCommentList(): List<CommentDto> {
         val foundComments = commentRepository.findAll()
         return foundComments.map { CommentDto.from(it) }
     }
@@ -45,7 +46,7 @@ class CommentServiceImpl(
         foundComment.changeContent(updateCommentArguments.content)
         commentRepository.save(foundComment)
         return CommentDto.from(foundComment)
-    }//z
+    }
 
     override fun deleteComment(deleteCommentArguments: DeleteCommentArguments) {
         val foundComment = deleteCommentArguments.id?.let {
