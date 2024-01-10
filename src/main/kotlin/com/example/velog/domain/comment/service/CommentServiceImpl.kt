@@ -36,8 +36,8 @@ class CommentServiceImpl(
         return foundComment.let { CommentDto.from(it) }
     }
 
-    override fun findAllCommentList(): List<CommentDto> {
-        val foundComments = commentRepository.findAll()
+    override fun findAllCommentList(postId: Long): List<CommentDto> {
+        val foundComments = commentRepository.findAllByPostId(postId)
         return foundComments.map { CommentDto.from(it) }
     }
 

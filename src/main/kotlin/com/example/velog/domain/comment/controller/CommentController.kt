@@ -43,7 +43,7 @@ class CommentController(
     fun getCommentList(
         @PathVariable postId: Long
     ): ResponseEntity<List<CommentDto>> {
-        val result = commentService.findAllCommentList()
+        val result = commentService.findAllCommentList(postId)
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(result)
