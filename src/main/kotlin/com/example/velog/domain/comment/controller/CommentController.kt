@@ -21,9 +21,10 @@ class CommentController(
     @Operation(summary = "댓글 작성", description = "postId를 기준으로 댓글을 작성합니다.")
     @PostMapping
     fun createComment(
-        @RequestBody creatCommentArguments: CreatCommentArguments,
+        @PathVariable postId: Long,
+        @RequestBody creatCommentArguments: CreatCommentArguments
     ): ResponseEntity<CommentDto> {
-        val result = commentService.createComment(creatCommentArguments)
+        val result = commentService.createComment(creatCommentArguments, postId)
         return ResponseEntity
             .status(HttpStatus.CREATED)
             .body(result)

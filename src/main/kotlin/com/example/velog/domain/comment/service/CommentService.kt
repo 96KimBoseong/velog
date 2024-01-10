@@ -6,7 +6,7 @@ import com.example.velog.domain.comment.dto.DeleteCommentArguments
 import com.example.velog.domain.comment.dto.UpdateCommentArguments
 
 interface CommentService {
-    fun createComment(creatCommentArguments: CreatCommentArguments): CommentDto
+    fun createComment(creatCommentArguments: CreatCommentArguments, postId: Long): CommentDto
     fun findByCommentId(commentId: Long): CommentDto
     fun findAllCommentList(): List<CommentDto>
 

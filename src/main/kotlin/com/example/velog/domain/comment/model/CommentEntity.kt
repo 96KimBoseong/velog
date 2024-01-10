@@ -21,13 +21,7 @@ class CommentEntity(
     val updateName: String,
 
     @Column
-    val postId: Long,
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_id")
-    var post:PostEntity
-
-
+    val postId: Long
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

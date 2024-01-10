@@ -14,8 +14,8 @@ class CommentServiceImpl(
     val commentRepository: CommentRepository,
     val postRepository: PostRepository
 ) : CommentService {
-    override fun createComment(creatCommentArguments: CreatCommentArguments): CommentDto {
-        val targetPost = postRepository.findByIdOrNull(creatCommentArguments.postId)
+    override fun createComment(creatCommentArguments: CreatCommentArguments, postId: Long): CommentDto {
+        val targetPost = postRepository.findByIdOrNull(postId)
             ?: throw Exception("target post is not found")
         val commentEntity = CommentEntity(
             content = creatCommentArguments.content,
