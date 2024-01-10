@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatusCode
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RestController
@@ -38,7 +39,9 @@ class UserController(
 //    }
     @Operation(summary = "사용자 정보 수정", description = "프로필 정보 수정")
     @PutMapping("/users/{userId}")
-    fun profileUpdate(){
+    fun profileUpdate(
+        @PathVariable userId:Long
+    ){
         TODO()
     }
 
