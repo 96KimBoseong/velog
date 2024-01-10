@@ -11,5 +11,5 @@ import com.example.velog.domain.post.dto.PostResponseDto
 interface TrendService {
 
     //모든 게시글 목록을 조회수가 높은 순으로 가져오는 메소드
-    fun getTrendList(): List<PostResponseDto>
+    fun getTrendList(page: Int, size: Int): List<PostResponseDto>
 }
