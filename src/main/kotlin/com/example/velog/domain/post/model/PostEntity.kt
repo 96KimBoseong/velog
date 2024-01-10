@@ -27,8 +27,8 @@ class PostEntity private constructor( //데이터베이스에서 데이터를 �
     @Column(name = "update_name") //매핑할 테이블의 컬럼을 정의
     var updateName: String, //변경한 사람 이름은 수정 가능, null 허용 X
 
-    @OneToMany
-    val comment: List<CommentEntity> = emptyList()
+    @OneToMany(mappedBy = "post" , fetch = FetchType.LAZY , cascade = [CascadeType.ALL] , orphanRemoval = true )
+    val comment: MutableList<CommentEntity> = mutableListOf()
 
 ) {
     @Id //PK 설정
