@@ -4,5 +4,5 @@ import com.example.velog.domain.post.dto.PostResponseDto
 
 interface RecentService {
 
-    fun getRecentList(): List<PostResponseDto>
+    fun getRecentList(page: Int, size: Int): List<PostResponseDto>
 }

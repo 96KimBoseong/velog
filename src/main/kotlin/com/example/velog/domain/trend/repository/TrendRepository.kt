@@ -1,7 +1,9 @@
 package com.example.velog.domain.trend.repository
 
 import com.example.velog.domain.post.model.PostEntity
+import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Query
 
 /*
 * Spring Layer의 일부
@@ -11,4 +13,7 @@ import org.springframework.data.jpa.repository.JpaRepository
 */
 interface TrendRepository:JpaRepository<PostEntity, Long> {
     fun findAllByOrderByViewsDesc(): List<PostEntity>
+
+    @Query("select p from PostEntity p left join fetch p.comments order by p.views desc ")
+    fun findAllByOrderByViewsDesc(pageable: Pageable): List<PostEntity>
 }
