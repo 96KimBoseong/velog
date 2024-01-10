@@ -1,6 +1,7 @@
 package com.example.velog.domain.post.service
 
 import com.example.velog.domain.post.dto.CreatePostRequestDto
+import com.example.velog.domain.post.dto.PostDetailResponseDto
 import com.example.velog.domain.post.dto.PostResponseDto
 import com.example.velog.domain.post.dto.UpdatePostRequestDto
 
@@ -16,7 +17,7 @@ interface PostService {
     fun createPost(requestDto: CreatePostRequestDto): PostResponseDto
 
     //id에 해당하는 게시글을 가져오는 메소드
-    fun getPost(postId: Long): PostResponseDto
+    fun getPost(postId: Long): PostDetailResponseDto
 
     //id에 해당하는 게시글을 수정하는 메소드
     fun updatePost(postId: Long, requestDto: UpdatePostRequestDto): PostResponseDto
