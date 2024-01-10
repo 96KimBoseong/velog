@@ -28,6 +28,21 @@ class PostServiceImpl(
         return PostEntity.toResponse(postRepository.save(postEntity))
     }
 
+
+//    override fun getPostList(
+//        requestDto: GetAllPostRequestDto
+//    ): List<PostResponseDto> {
+//        val entityList =
+//            when(requestDto.sortBy){
+//                "hot" -> postRepository.findAllByOrderByViewsDesc()
+//                "new" -> postRepository.findAllByOrderByCreateAtDesc()
+//                else -> throw IllegalStateException("Unsupported sorting method")
+//            }
+//        return entityList.map{PostEntity.toResponse((it))}
+//    }
+
+
+
     //id에 해당하는 게시글을 가져하는 메소드
     override fun getPost(postId: Long): PostResponseDto {
         val postEntity = postRepository.findByIdOrNull(postId) ?: throw ModelNotFoundException("post", postId)

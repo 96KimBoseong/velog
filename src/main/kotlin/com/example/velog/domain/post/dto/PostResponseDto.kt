@@ -1,5 +1,6 @@
 package com.example.velog.domain.post.dto
 
+import com.example.velog.domain.comment.model.CommentEntity
 import java.time.LocalDateTime
 
 /*
@@ -16,5 +17,6 @@ data class PostResponseDto(
     val updateAt: LocalDateTime, //수정 시간
     val createName: String,
     val updateName: String,
-    val views: Int
+    val views: Int,
+    val comments: MutableList<CommentEntity>
 )
