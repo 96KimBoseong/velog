@@ -10,7 +10,10 @@ import org.springframework.stereotype.Service
 class TrendServiceImpl(
     private val trendRepository: TrendRepository
 ):TrendService {
-    override fun getTrendList(page: Int, size: Int): List<PostResponseDto> {
+    override fun getTrendList(
+        page: Int,
+        size: Int
+    ): List<PostResponseDto> {
 //        return trendRepository.findAllByOrderByViewsDesc().map{ PostEntity.toResponse(it)}
 
         return trendRepository.findAllByOrderByViewsDesc(PageRequest.of(page, size)).map{ PostEntity.toResponse(it)}
