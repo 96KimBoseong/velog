@@ -6,6 +6,7 @@ import com.example.velog.domain.post.dto.PostResponseDto
 import com.example.velog.domain.post.dto.UpdatePostRequestDto
 import com.example.velog.domain.post.model.PostEntity
 import com.example.velog.domain.exception.ModelNotFoundException
+import com.example.velog.domain.post.dto.PostDetailResponseDto
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -44,10 +45,10 @@ class PostServiceImpl(
 
 
     //id에 해당하는 게시글을 가져하는 메소드
-    override fun getPost(postId: Long): PostResponseDto {
+    override fun getPost(postId: Long): PostDetailResponseDto {
         val postEntity = postRepository.findByIdOrNull(postId) ?: throw ModelNotFoundException("post", postId)
         postEntity.views++
-        return PostEntity.toResponse(postRepository.save(postEntity))
+        return PostEntity.toResponseWithComments(postRepository.save(postEntity))
     }
 
     //id에 해당하는 게시글을 수정하는 메소드

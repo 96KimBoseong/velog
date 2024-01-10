@@ -1,6 +1,7 @@
 package com.example.velog.domain.post.controller
 
 import com.example.velog.domain.post.dto.CreatePostRequestDto
+import com.example.velog.domain.post.dto.PostDetailResponseDto
 import com.example.velog.domain.post.dto.PostResponseDto
 import com.example.velog.domain.post.service.PostService
 import com.example.velog.domain.post.dto.UpdatePostRequestDto
@@ -43,7 +44,7 @@ class PostController(
     @GetMapping("/{postId}") //Get 메소드 핸들링, /posts/{postId}에 접근한다.
     fun getPost(
         @PathVariable postId: Long
-    ): ResponseEntity<PostResponseDto>{ //
+    ): ResponseEntity<PostDetailResponseDto>{ //
         return ResponseEntity
             .status(HttpStatus.OK) //조회 성공하면 200 OK 상태 코드 반환
             .body(postService.getPost(postId))

@@ -4,12 +4,14 @@ import com.example.velog.domain.user.dto.UserResponseDto
 import com.example.velog.domain.user.dto.UserSignUpDto
 import com.example.velog.domain.user.model.UserEntity
 import com.example.velog.domain.user.repository.UserRepository
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
 class UserServiceImpl(
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val encoder: PasswordEncoder //회원가입할 때 비밀번호를 암호화하기 위해서 사용하는 인코더
 ):UserService {
     @Transactional//트랜젝션은 db에서 쓰는 개념 찾아보기 ㅇㅇ
     override fun signUp(userSignUpDto: UserSignUpDto): UserResponseDto {
@@ -21,7 +23,7 @@ class UserServiceImpl(
             UserEntity(
             userName = userSignUpDto.userName,
             email =  userSignUpDto.userEmail,
-            password = userSignUpDto.password
+            password = encoder.encode(userSignUpDto.password) //비밀번호를 암호화해서 저장함
         )).toResponse()
         // signUp 메서드로 반환
         //무엇을? - userRepository 안에 쿼리문인 save는 만든 entity안에 있는 값을 db에 전달해주는것
