@@ -9,7 +9,7 @@ import jakarta.validation.constraints.Pattern
 @Schema(description = "로그인할 때 입력한 정보를 전달하는 객체")
 data class UserLoginDto(
     @field:Email(message = "올바른 이메일 주소를 입력해주세요")
-    @field:NotNull(message = "이메일은 필수 입력값입니다.") //@Email 어노테이션은 null이 포함될 수 있기 때문에 이걸 붙여야 함
+    @field:NotNull(message = "이메일은 필수 입력값입니다.")
     @Schema(description = "로그인할 때 사용할 이메일", example = "test@gmail.com")
     val email: String,
 

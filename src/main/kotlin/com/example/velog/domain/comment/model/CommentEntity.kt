@@ -1,6 +1,6 @@
 package com.example.velog.domain.comment.model
+
 import com.example.velog.domain.comment.dto.UpdateCommentArguments
-import com.example.velog.domain.post.model.PostEntity
 import jakarta.persistence.*
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate

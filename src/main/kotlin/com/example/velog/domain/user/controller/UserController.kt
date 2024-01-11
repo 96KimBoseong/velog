@@ -19,58 +19,30 @@ import org.springframework.web.bind.annotation.RestController
 class UserController(
     private val userService: UserService
 ) {
-
     @Operation(summary = "회원가입", description = "회원가입.")
-    @PostMapping("/signup")   //signColler
-    fun signUp(userSignUpDto: UserSignUpDto):ResponseEntity<UserResponseDto>{
+    @PostMapping("/signup")
+    fun signUp(@Valid @RequestBody userSignUpDto: UserSignUpDto): ResponseEntity<UserResponseDto> {
         return ResponseEntity
             .status(HttpStatus.CREATED)
             .body(userService.signUp(userSignUpDto))
     }
 
-
     @Operation(summary = "사용자 정보 수정", description = "프로필 정보 수정")
     @PutMapping("/{userId}")
     fun userUpdate(
-        @PathVariable userId:Long,
+        @PathVariable userId: Long,
         @RequestBody userUpdateDto: UserUpdateDto
-    ):ResponseEntity<UserResponseDto>{
+    ): ResponseEntity<UserResponseDto> {
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(userService.updateUser(userId,userUpdateDto))
+            .body(userService.updateUser(userId, userUpdateDto))
     }
 
     @Operation(summary = "로그인", description = "사용자가 입력한 아이디와 비밀번호로 로그인을 시도.")
-    @PostMapping("/login") //POST 메소드 핸들링, /login에 접근한다
-    fun login(@Valid @RequestBody userLoginDto: UserLoginDto): ResponseEntity<TokenInfoDto>{
+    @PostMapping("/login")
+    fun login(@Valid @RequestBody userLoginDto: UserLoginDto): ResponseEntity<TokenInfoDto> {
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(userService.login(userLoginDto))
     }
-
-//1. 사용자가 로그인을 한다. ()
-//    - 아이디, 비밀번호 체크
-//    - 승인되면 토큰을 발급한다.
-//    - 브라우저에 토큰값을 저장한다.
-//
-//2. 다른 API를 호출한다.
-//    - 브라우저에 저장된 토큰값을 함께 보낸다.
-//    - 토큰값을 분석한다. 이 토큰이 올바른가? 사용자 정보는??
-//    - 그 정보로 API를 호출한다.
-//
-//
-//1. 회원가입할 때
-//
-//    -> user 가입대기상태
-//
-//    임의의 토큰을 발행해 URL만들어서
-//    www.naver.com/sign"token=123kljklj12erlj1r2lkjkl12rjrk12ljkl
-//
-//    sign 0--=-------
-//    암호화된걸 풀어서
-//    유효한가. 사용자가 가입대기상태인가?
-//    상태: 가입대기 -> 가입
-
-
-
 }

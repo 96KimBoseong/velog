@@ -4,19 +4,19 @@ import com.example.velog.domain.user.dto.UserResponseDto
 import com.example.velog.domain.user.dto.UserSignUpDto
 import com.example.velog.domain.user.dto.UserUpdateDto
 import jakarta.persistence.*
+import org.springframework.security.crypto.password.PasswordEncoder
 
 @Entity
 @Table(name = "app_user")
-class UserEntity(
-
+class UserEntity private constructor(
     @Column(name = "username")
-    var userName:String,
+    var userName: String,
 
     @Column(name = "email")
-    var email:String,
+    var email: String,
 
-    @Column(name="password")
-    val password:String,
+    @Column(name = "password")
+    val password: String,
 
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
@@ -24,24 +24,37 @@ class UserEntity(
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var userId:Long?=null
-    //db가 아이디 만들어주는데 null일수도 있다 ?
-    //response만들 때 위에 적으면 id를 입력해주는 코드를 작성해야함 ?
-    //GeneratedValue 검색 해보기 db가 자동으로 id를 들어온 순서대로 지정해줌
+    var userId: Long? = null
 
     fun updateUserprofile(userUpdateDto: UserUpdateDto) {
         this.userName = userUpdateDto.userName
         this.email = userUpdateDto.userEmail
     }
 
-    fun toResponse():UserResponseDto{
-//확장함수
-        return UserResponseDto(
-            userId = userId!!,
-            userName = userName,
-            userEmail = email
-        )
+    companion object {
+        fun toUserEntity(
+            userSignUpDto: UserSignUpDto,
+            encoder: PasswordEncoder
+        ): UserEntity {
+            return UserEntity(
+                userName = userSignUpDto.userName,
+                email = userSignUpDto.userEmail,
+                password = encoder.encode(userSignUpDto.password),
+                role = Role.MEMBER
+            )
+        }
+
+        fun toResponse(
+            userEntity: UserEntity
+        ): UserResponseDto {
+            return UserResponseDto(
+                userId = userEntity.userId!!,
+                userName = userEntity.userName,
+                userEmail = userEntity.email
+            )
+        }
     }
-}//end
+
+}
 
 

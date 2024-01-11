@@ -1,9 +1,10 @@
 package com.example.velog.domain.comment.dto
 
 import com.example.velog.domain.comment.model.CommentEntity
-import org.springframework.data.jpa.domain.AbstractPersistable_.id
+import io.swagger.v3.oas.annotations.media.Schema
 import java.time.LocalDateTime
 
+@Schema(description = "게시글을 수정할 때 입력한 정보를 전달하는 객체")
 data class CommentDto(
     val id: Long?,
     val content: String,
@@ -22,7 +23,7 @@ data class CommentDto(
                 updateName = comment.updateName,
                 updateAt = comment.updateAt,
                 createName = comment.createName,
-                postId = comment.postId ?: throw Exception("target post not found")
+                postId = comment.postId
             )
         }
     }
