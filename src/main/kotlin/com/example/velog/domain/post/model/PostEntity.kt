@@ -30,7 +30,6 @@ class PostEntity private constructor( //데이터베이스에서 데이터를 �
 
     @OneToMany(mappedBy = "postId", fetch = FetchType.LAZY, cascade=[CascadeType.ALL], orphanRemoval = true)
     var comments: MutableList<CommentEntity> = mutableListOf()
-
 ) {
     @Id //PK 설정
     @GeneratedValue(strategy = GenerationType.IDENTITY) //데이터베이스에서 ID를 자동으로 생성

@@ -1,15 +1,18 @@
 package com.example.velog.domain.user.controller
 
+import com.example.velog.domain.user.dto.TokenInfoDto
+import com.example.velog.domain.user.dto.UserLoginDto
 import com.example.velog.domain.user.dto.UserResponseDto
 import com.example.velog.domain.user.dto.UserSignUpDto
 import com.example.velog.domain.user.service.UserService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
+import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
-import org.springframework.http.HttpStatusCode
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 
 @Tag(name = "users", description = "사용자 API")
@@ -21,7 +24,7 @@ class UserController(
 
     @Operation(summary = "회원가입", description = "회원가입.")
     @PostMapping("/signup")
-    fun signUp(userSignUpDto: UserSignUpDto):ResponseEntity<UserResponseDto>{
+    fun signUp(@Valid @RequestBody userSignUpDto: UserSignUpDto): ResponseEntity<UserResponseDto>{
         //사용자가 입력한 정보를 전달인자로 받고 서비스에서 작업한 유저리스폰스디티오를 리스폰스
         //엔티티로 감싸준다 userResponseDto를 감싸는 박스가 ResponseEntity - 검색해보기;; ㅜㅜ
         return ResponseEntity
@@ -37,5 +40,13 @@ class UserController(
 //
 //    }
 
+
+    @Operation(summary = "로그인", description = "사용자가 입력한 아이디와 비밀번호로 로그인을 시도.")
+    @PostMapping("/login") //POST 메소드 핸들링, /login에 접근한다
+    fun login(@Valid @RequestBody userLoginDto: UserLoginDto): ResponseEntity<TokenInfoDto>{
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(userService.login(userLoginDto))
+    }
 
 }
