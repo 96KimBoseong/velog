@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class UserController(
     private val userService: UserService
-    //서비스와 컨트롤러 연결
 ) {
 
     @Operation(summary = "회원가입", description = "회원가입.")
