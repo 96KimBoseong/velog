@@ -10,8 +10,6 @@ import org.springframework.data.annotation.LastModifiedDate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import java.time.LocalDateTime
 
-//Domain Model: Domain Service, Entity, VO(Value Object)를 포함하는 개념
-
 @EntityListeners(AuditingEntityListener::class) //AuditingEntityListener 기능 사용하기 위해서 추가
 @Entity //Entity annotation, 객체를 entity로 사용하기 위해서 사용
 @Table(name = "post") //매핑할 테이블 이름을 정의
