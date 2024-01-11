@@ -1,11 +1,10 @@
 package com.example.velog.domain.user.controller
 
-import com.example.velog.domain.user.dto.UserResponseDto
-import com.example.velog.domain.user.dto.UserSignUpDto
-import com.example.velog.domain.user.dto.UserUpdateDto
+import com.example.velog.domain.user.dto.*
 import com.example.velog.domain.user.service.UserService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
+import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatusCode
 import org.springframework.http.ResponseEntity
@@ -39,6 +38,14 @@ class UserController(
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(userService.updateUser(userId,userUpdateDto))
+    }
+
+    @Operation(summary = "로그인", description = "사용자가 입력한 아이디와 비밀번호로 로그인을 시도.")
+    @PostMapping("/login") //POST 메소드 핸들링, /login에 접근한다
+    fun login(@Valid @RequestBody userLoginDto: UserLoginDto): ResponseEntity<TokenInfoDto>{
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(userService.login(userLoginDto))
     }
 
 //1. 사용자가 로그인을 한다. ()

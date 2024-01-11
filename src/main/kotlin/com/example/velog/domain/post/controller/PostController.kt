@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 
 /*
@@ -27,6 +28,7 @@ class PostController(
     /* 게시글을 생성하는 메소드
     * postCreateRequest를 argument로 받음
     * Service Layer로부터 PostResponseDto DTO를 받아서 ResponseEntity로 감싸고 응답*/
+    @PreAuthorize("hasRole('MEMBER')") //가입된 사용자만 가능
     @Operation(summary = "게시글 작성", description = "게시글을 작성합니다.") //Swagger에서 확인할 수 있도록 설명 추가
     @PostMapping //Post 메소드 핸들링, /posts에 접근한다.
     fun createPost(

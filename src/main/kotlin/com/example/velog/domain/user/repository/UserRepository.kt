@@ -8,6 +8,6 @@ interface UserRepository:JpaRepository<UserEntity,Long> {
     fun existsByEmail(email:String):Boolean
     //이메일이 있냐?ㅇㅇ 불리언값 으로 반환
    // fun findAllByEmail(email: String):List 예시예시
-
+    fun findByEmail(email: String): UserEntity?
 }
-//repository는 entity를 이용하여 db에 있는 데이터에 접근한다  sql문을 사용해서 ㅋㅋ
+//repository는 entity를 이용하여 db에 있는 데이터에 접근한다  sql문을 사용해서 ㅋㅋ루삥빵뽕뽕 ㅋㅋ

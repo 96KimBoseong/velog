@@ -18,9 +18,9 @@ class UserEntity(
     @Column(name="password")
     val password:String,
 
-//    @Column(name = "role")
-//    val role:String,
-
+    @Column(name = "role")
+    @Enumerated(EnumType.STRING)
+    val role: Role
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

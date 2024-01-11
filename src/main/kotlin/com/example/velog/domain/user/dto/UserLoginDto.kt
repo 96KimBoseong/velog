@@ -21,3 +21,4 @@ data class UserLoginDto(
     @Schema(description = "로그인할 때 사용할 비밀번호", example = "12345678")
     val password: String
 )
+

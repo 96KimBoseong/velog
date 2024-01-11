@@ -1,8 +1,6 @@
 package com.example.velog.domain.user.service
 
-import com.example.velog.domain.user.dto.UserResponseDto
-import com.example.velog.domain.user.dto.UserSignUpDto
-import com.example.velog.domain.user.dto.UserUpdateDto
+import com.example.velog.domain.user.dto.*
 
 interface UserService {
 
@@ -11,4 +9,6 @@ interface UserService {
 
     fun updateUser(userId:Long,userUpdateDto: UserUpdateDto):UserResponseDto
     //userUpdate 메소드 전달인자를 userId와 userUpdateDto로 받고 USerResponseDto로 반환
+
+    fun login(userLoginDto: UserLoginDto): TokenInfoDto
 }
