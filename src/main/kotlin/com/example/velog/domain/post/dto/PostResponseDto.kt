@@ -1,6 +1,7 @@
 package com.example.velog.domain.post.dto
 
 import com.example.velog.domain.comment.model.CommentEntity
+import io.swagger.v3.oas.annotations.media.Schema
 import java.time.LocalDateTime
 
 /*
@@ -9,6 +10,7 @@ import java.time.LocalDateTime
 * 요청(Request)과 응답(Response) 또한 DTO로 표현 가능
 * 다른 layer로 데이터를 전달할 때(응답할 때) 사용되는 클래스
 */
+@Schema(description = "응답을 전달하는 객체")
 data class PostResponseDto(
     val postId: Long, //게시글 번호, DB에서 생성됨
     val title: String, //게시글 제목
