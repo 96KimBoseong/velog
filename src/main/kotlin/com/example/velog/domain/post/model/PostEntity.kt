@@ -12,7 +12,7 @@ import java.time.LocalDateTime
 
 @EntityListeners(AuditingEntityListener::class) //AuditingEntityListener 기능 사용하기 위해서 추가
 @Entity //Entity annotation, 객체를 entity로 사용하기 위해서 사용
-@Table(name = "post") //매핑할 테이블 이름을 정의
+@Table(name = "post")
 class PostEntity private constructor( //데이터베이스에서 데이터를 가져올 때 사용하는 클래스
     @Column(name = "title") //매핑할 테이블의 컬럼을 정의
     var title: String, //제목은 수정 가능, null 허용 X
