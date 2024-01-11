@@ -2,6 +2,7 @@ package com.example.velog.domain.user.controller
 
 import com.example.velog.domain.user.dto.UserResponseDto
 import com.example.velog.domain.user.dto.UserSignUpDto
+import com.example.velog.domain.user.dto.UserUpdateDto
 import com.example.velog.domain.user.service.UserService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 
 @Tag(name = "users", description = "사용자 API")
@@ -39,10 +41,13 @@ class UserController(
 //    }
     @Operation(summary = "사용자 정보 수정", description = "프로필 정보 수정")
     @PutMapping("/users/{userId}")
-    fun profileUpdate(
-        @PathVariable userId:Long
-    ){
-        TODO()
+    fun userUpdate(
+        @PathVariable userId:Long,
+        @RequestBody userUpdateDto: UserUpdateDto
+    ):ResponseEntity<UserResponseDto>{
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(userService.userUpdate(userId,userUpdateDto))
     }
 
 

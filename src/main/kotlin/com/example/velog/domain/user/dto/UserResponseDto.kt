@@ -5,7 +5,8 @@ data class UserResponseDto(
 
     val userName:String,
 
-    val userEmail:String,
+    val userEmail:String
+
 
 //    val role:String
 

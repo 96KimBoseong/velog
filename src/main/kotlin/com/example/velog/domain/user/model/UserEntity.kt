@@ -9,10 +9,10 @@ import jakarta.persistence.*
 class UserEntity(
 
     @Column(name = "username")
-    val userName:String,
+    var userName:String,
 
     @Column(name = "email")
-    val email:String,
+    var email:String,
 
     @Column(name="password")
     val password:String,

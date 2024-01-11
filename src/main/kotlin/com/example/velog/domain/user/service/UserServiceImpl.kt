@@ -1,10 +1,12 @@
 package com.example.velog.domain.user.service
 
+import com.example.velog.domain.exception.ModelNotFoundException
 import com.example.velog.domain.user.dto.UserResponseDto
 import com.example.velog.domain.user.dto.UserSignUpDto
 import com.example.velog.domain.user.dto.UserUpdateDto
 import com.example.velog.domain.user.model.UserEntity
 import com.example.velog.domain.user.repository.UserRepository
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -32,9 +34,16 @@ class UserServiceImpl(
         //하고 확장함수인 toResponse를 사용하여 ResponseDto로 이것들의 값을 전달
         //컨트롤러 <-> dto <-> 서비스 <-> entity <-> 레포지토리
     }
-
-    override fun userUpdate(userUpdateDto: UserUpdateDto): UserResponseDto {
-        TODO("Not yet implemented")
+    @Transactional
+    override fun userUpdate(
+        userId:Long,
+        userUpdateDto: UserUpdateDto
+    ): UserResponseDto {
+      val userEntity = userRepository.findByIdOrNull(userId)?: throw ModelNotFoundException("user",userId)
+        userEntity.userName = userUpdateDto.userName
+        userEntity.email = userUpdateDto.userEmail
+        userRepository.save(userEntity)
+        return userEntity.toResponse()
 
     }
 }
