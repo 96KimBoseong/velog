@@ -45,10 +45,11 @@ class PostServiceImpl(
 
 
     //id에 해당하는 게시글을 가져하는 메소드
+    @Transactional
     override fun getPost(postId: Long): PostDetailResponseDto {
         val postEntity = postRepository.findByIdOrNull(postId) ?: throw ModelNotFoundException("post", postId)
-        postEntity.views++
-        return PostEntity.toResponseWithComments(postRepository.save(postEntity))
+        postEntity.plusView()
+        return PostEntity.toResponseWithComments(postEntity)
     }
 
     //id에 해당하는 게시글을 수정하는 메소드

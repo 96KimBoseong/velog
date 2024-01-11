@@ -16,39 +16,54 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 
 @Tag(name = "users", description = "사용자 API")
-@RestController
+@RestController("users")
 class UserController(
     private val userService: UserService
-    //서비스와 컨트롤러 연결
 ) {
 
     @Operation(summary = "회원가입", description = "회원가입.")
-    @PostMapping("/signup")
+    @PostMapping("/signup")   //signColler
     fun signUp(userSignUpDto: UserSignUpDto):ResponseEntity<UserResponseDto>{
-        //사용자가 입력한 정보를 전달인자로 받고 서비스에서 작업한 유저리스폰스디티오를 리스폰스
-        //엔티티로 감싸준다 userResponseDto를 감싸는 박스가 ResponseEntity - 검색해보기;; ㅜㅜ
         return ResponseEntity
             .status(HttpStatus.CREATED)
             .body(userService.signUp(userSignUpDto))
     }
-    // 햄버거만들고 햄버거 상태 좋음 표시 해주고 햄버거를 만들어서 넣어줌 여기서 만든다는건 userService.signUP(userSignUpDto) <- 햄벅만들기ㅇㅇ
-    //컨트롤과 서비스는 dto로만 소통한다 == 캐셔?와 요리사는 주문서로만 소통한다
-    //
-//    @Operation(summary = "프로필 수정", description = "사용자의 프로필을 수정합니다.")
-//    @PutMapping("/users/{userId}/profile")
-//    fun updateUserProfile(){
-//
-//    }
+
+
     @Operation(summary = "사용자 정보 수정", description = "프로필 정보 수정")
-    @PutMapping("/users/{userId}")
+    @PutMapping("/{userId}")
     fun userUpdate(
         @PathVariable userId:Long,
         @RequestBody userUpdateDto: UserUpdateDto
     ):ResponseEntity<UserResponseDto>{
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(userService.userUpdate(userId,userUpdateDto))
+            .body(userService.updateUser(userId,userUpdateDto))
     }
+
+//1. 사용자가 로그인을 한다. ()
+//    - 아이디, 비밀번호 체크
+//    - 승인되면 토큰을 발급한다.
+//    - 브라우저에 토큰값을 저장한다.
+//
+//2. 다른 API를 호출한다.
+//    - 브라우저에 저장된 토큰값을 함께 보낸다.
+//    - 토큰값을 분석한다. 이 토큰이 올바른가? 사용자 정보는??
+//    - 그 정보로 API를 호출한다.
+//
+//
+//1. 회원가입할 때
+//
+//    -> user 가입대기상태
+//
+//    임의의 토큰을 발행해 URL만들어서
+//    www.naver.com/sign"token=123kljklj12erlj1r2lkjkl12rjrk12ljkl
+//
+//    sign 0--=-------
+//    암호화된걸 풀어서
+//    유효한가. 사용자가 가입대기상태인가?
+//    상태: 가입대기 -> 가입
+
 
 
 }

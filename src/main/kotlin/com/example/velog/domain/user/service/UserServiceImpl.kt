@@ -35,26 +35,21 @@ class UserServiceImpl(
         //컨트롤러 <-> dto <-> 서비스 <-> entity <-> 레포지토리
     }
     @Transactional
-    override fun userUpdate(
+    override fun updateUser(
         userId:Long,
         userUpdateDto: UserUpdateDto
     ): UserResponseDto {
       val userEntity = userRepository.findByIdOrNull(userId)?: throw ModelNotFoundException("user",userId)
-        userEntity.userName = userUpdateDto.userName
-        userEntity.email = userUpdateDto.userEmail
-        userRepository.save(userEntity)
+        userEntity.updateUserprofile(userUpdateDto)
+//        userEntity.userName = userUpdateDto.userName
+//        userEntity.email = userUpdateDto.userEmail
+//        userRepository.save(userEntity)
+//        dirty checking jap
         return userEntity.toResponse()
 
     }
 }
-fun UserEntity.toResponse():UserResponseDto{
-//확장함수
-    return UserResponseDto(
-        userId = userId!!,
-        userName = userName,
-        userEmail = email
-    )
-}// db에서 가져온 값이 담겨있는 entity를 UserResponseDto로 변환하고 컨트롤러로 보내주는 확장함수
+// db에서 가져온 값이 담겨있는 entity를 UserResponseDto로 변환하고 컨트롤러로 보내주는 확장함수
 //fun UserEntity.createEntity(userSignUpDto: UserSignUpDto): UserEntity {
 //    return  UserEntity(
 //        userName = userSignUpDto.userName,

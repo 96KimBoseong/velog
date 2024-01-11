@@ -2,6 +2,7 @@ package com.example.velog.domain.user.model
 
 import com.example.velog.domain.user.dto.UserResponseDto
 import com.example.velog.domain.user.dto.UserSignUpDto
+import com.example.velog.domain.user.dto.UserUpdateDto
 import jakarta.persistence.*
 
 @Entity
@@ -28,5 +29,19 @@ class UserEntity(
     //response만들 때 위에 적으면 id를 입력해주는 코드를 작성해야함 ?
     //GeneratedValue 검색 해보기 db가 자동으로 id를 들어온 순서대로 지정해줌
 
-}
+    fun updateUserprofile(userUpdateDto: UserUpdateDto) {
+        this.userName = userUpdateDto.userName
+        this.email = userUpdateDto.userEmail
+    }
+
+    fun toResponse():UserResponseDto{
+//확장함수
+        return UserResponseDto(
+            userId = userId!!,
+            userName = userName,
+            userEmail = email
+        )
+    }
+}//end
+
 

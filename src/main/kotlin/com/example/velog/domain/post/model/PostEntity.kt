@@ -47,6 +47,7 @@ class PostEntity private constructor( //데이터베이스에서 데이터를 �
     @Column(name = "views") //매핑할 테이블의 컬럼을 정의
     var views: Int = 0 //조회수는 수정 가능, null 허용 X, 기본값은 0
 
+    fun plusView() = this.views++
 
     companion object {
         fun toEntity( //Request를 PostEntity로 변환하는 메소드
