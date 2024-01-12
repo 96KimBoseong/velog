@@ -7,6 +7,7 @@ import com.example.velog.domain.comment.model.CommentEntity
 import com.example.velog.domain.comment.repository.CommentRepository
 import com.example.velog.domain.exception.ModelNotFoundException
 import com.example.velog.domain.post.repository.PostRepository
+import com.example.velog.domain.user.model.CustomUser
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -17,12 +18,17 @@ class CommentServiceImpl(
     val postRepository: PostRepository
 ) : CommentService {
     @Transactional
-    override fun createComment(creatCommentArguments: CreatCommentArguments, postId: Long): CommentDto {
+    override fun createComment(
+        creatCommentArguments: CreatCommentArguments,
+        postId: Long,
+        user: CustomUser
+    ): CommentDto {
         val targetPost = postRepository.findByIdOrNull(postId)
             ?: throw ModelNotFoundException("post", postId)
         val commentEntity = CommentEntity(
             content = creatCommentArguments.content,
-            postId = targetPost.postId!!
+            postId = targetPost.postId!!,
+            userId = user.username.toLong()
         )
         val result = commentRepository.save(commentEntity)
         return CommentDto.from(result)
@@ -60,4 +66,9 @@ class CommentServiceImpl(
 
         commentRepository.delete(foundComment)
     }
-} //END
+
+    override fun getCreatedId(postId: Long, commentId: Long): Long {
+        return commentRepository.findByPostIdAndCommentId(postId, commentId)?.userId
+            ?: throw ModelNotFoundException("post", postId)
+    }
+}

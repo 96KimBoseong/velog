@@ -1,12 +1,12 @@
 package com.example.velog.domain.post.controller
 
+import com.example.velog.domain.exception.ForbiddenException
 import com.example.velog.domain.post.dto.CreatePostRequestDto
 import com.example.velog.domain.post.dto.PostDetailResponseDto
 import com.example.velog.domain.post.dto.PostResponseDto
 import com.example.velog.domain.post.service.PostService
 import com.example.velog.domain.post.dto.UpdatePostRequestDto
-import com.example.velog.domain.user.model.UserEntity
-import com.example.velog.domain.user.service.CustomUserDetailService
+import com.example.velog.domain.user.model.CustomUser
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
@@ -27,11 +27,11 @@ class PostController(
     @PostMapping
     fun createPost(
         @Valid @RequestBody requestDto: CreatePostRequestDto,
+        @AuthenticationPrincipal user: CustomUser
     ): ResponseEntity<PostResponseDto> {
-
         return ResponseEntity
             .status(HttpStatus.CREATED)
-            .body(postService.createPost(requestDto))
+            .body(postService.createPost(requestDto, user))
     }
 
     @Operation(summary = "게시글 조회", description = "postId를 이용하여 게시글을 조회합니다.")
@@ -50,7 +50,10 @@ class PostController(
     fun updatePost(
         @PathVariable postId: Long,
         @Valid @RequestBody requestDto: UpdatePostRequestDto,
+        @AuthenticationPrincipal user: CustomUser
     ): ResponseEntity<PostResponseDto> {
+        if (postService.getCreatedId(postId) != user.username.toLong()) throw ForbiddenException("수정 권한이 없습니다.")
+
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(postService.updatePost(postId, requestDto))
@@ -60,8 +63,10 @@ class PostController(
     @Operation(summary = "게시글 삭제", description = "postId를 이용하여 게시글을 삭제합니다.")
     @DeleteMapping("/{postId}")
     fun deletePost(
-        @PathVariable postId: Long
+        @PathVariable postId: Long,
+        @AuthenticationPrincipal user: CustomUser
     ): ResponseEntity<Unit> {
+        if (postService.getCreatedId(postId) != user.username.toLong()) throw ForbiddenException("삭제 권한이 없습니다.")
         postService.deletePost(postId)
         return ResponseEntity
             .status(HttpStatus.NO_CONTENT)

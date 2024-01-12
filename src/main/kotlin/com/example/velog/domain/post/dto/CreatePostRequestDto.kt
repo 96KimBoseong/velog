@@ -1,7 +1,9 @@
 package com.example.velog.domain.post.dto
 
+import com.example.velog.domain.user.model.CustomUser
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.*
+import org.springframework.security.core.annotation.AuthenticationPrincipal
 
 @Schema(description = "게시글을 작성할 때 입력한 정보를 전달하는 객체")
 data class CreatePostRequestDto(

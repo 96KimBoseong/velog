@@ -11,14 +11,18 @@ import java.time.LocalDateTime
 
 @EntityListeners(AuditingEntityListener::class)
 @Entity
-@Table(name = "Comment")
+//@Table(name = "Comment")
+@Table(name = "Comment2")
 class CommentEntity(
 
     @Column
     var content: String,
 
     @Column
-    val postId: Long
+    val postId: Long,
+
+    @Column
+    val userId: Long
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

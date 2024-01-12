@@ -4,11 +4,15 @@ import com.example.velog.domain.comment.dto.CommentDto
 import com.example.velog.domain.comment.dto.CreatCommentArguments
 import com.example.velog.domain.comment.dto.UpdateCommentArguments
 import com.example.velog.domain.comment.service.CommentService
+import com.example.velog.domain.exception.ForbiddenException
+import com.example.velog.domain.user.model.CustomUser
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
+import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
 
 @Tag(name = "comments", description = "댓글 API")
@@ -18,13 +22,15 @@ class CommentController(
     val commentService: CommentService
 ) {
 
+    @PreAuthorize("hasRole('MEMBER')")
     @Operation(summary = "댓글 작성", description = "postId를 기준으로 댓글을 작성합니다.")
     @PostMapping
     fun createComment(
         @PathVariable postId: Long,
-        @Valid @RequestBody creatCommentArguments: CreatCommentArguments
+        @Valid @RequestBody creatCommentArguments: CreatCommentArguments,
+        @AuthenticationPrincipal user: CustomUser
     ): ResponseEntity<CommentDto> {
-        val result = commentService.createComment(creatCommentArguments, postId)
+        val result = commentService.createComment(creatCommentArguments, postId, user)
         return ResponseEntity
             .status(HttpStatus.CREATED)
             .body(result)
@@ -58,8 +64,14 @@ class CommentController(
     fun updateComment(
         @PathVariable postId: Long,
         @PathVariable commentId: Long,
-        @Valid @RequestBody updateCommentArguments: UpdateCommentArguments
+        @Valid @RequestBody updateCommentArguments: UpdateCommentArguments,
+        @AuthenticationPrincipal user: CustomUser
     ): ResponseEntity<CommentDto> {
+        if (commentService.getCreatedId(
+                postId,
+                commentId
+            ) != user.username.toLong()
+        ) throw ForbiddenException("수정 권한이 없습니다.")
         val arguments = UpdateCommentArguments(
             content = updateCommentArguments.content
         )
@@ -74,10 +86,16 @@ class CommentController(
     fun deletePost(
         @PathVariable postId: Long,
         @PathVariable commentId: Long,
+        @AuthenticationPrincipal user: CustomUser
     ): ResponseEntity<Unit> {
+        if (commentService.getCreatedId(
+                postId,
+                commentId
+            ) != user.username.toLong()
+        ) throw ForbiddenException("삭제 권한이 없습니다.")
         commentService.deleteComment(postId, commentId)
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(null)
+            .build()
     }
 }

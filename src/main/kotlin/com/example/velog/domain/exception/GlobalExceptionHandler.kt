@@ -43,7 +43,7 @@ class GlobalExceptionHandler {
     fun handleDataIntegrityViolationException(e: DataIntegrityViolationException): ResponseEntity<ErrorResponseDto>{
         return ResponseEntity
             .status(HttpStatus.CONFLICT) //중복된 값이 있을 때 사용
-            .body(ErrorResponseDto("이미 사용중인 이메일입니다. 해당 이메일로 수정할 수 없습니다."))
+            .body(ErrorResponseDto(e.message))
     }
 
     @ExceptionHandler(AuthException::class)
