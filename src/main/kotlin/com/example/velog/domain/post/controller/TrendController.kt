@@ -1,7 +1,7 @@
-package com.example.velog.domain.recent.controller
+package com.example.velog.domain.post.controller
 
 import com.example.velog.domain.post.dto.PostResponseDto
-import com.example.velog.domain.recent.service.RecentService
+import com.example.velog.domain.post.service.PostService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.HttpStatus
@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
-@Tag(name = "recent", description = "최근에 만들어진 게시글을 보여주는 API")
-@RequestMapping("/recent")
+@Tag(name = "trend", description = "조회수가 높은 게시글을 보여주는 API")
+@RequestMapping("/trend")
 @RestController
-class RecentController(
-    private val resentService: RecentService
+class TrendController(
+    private val trendService: PostService
 ) {
     @Operation(summary = "게시글 목록 조회", description = "게시글 목록을 가져옵니다.")
     @GetMapping
@@ -28,6 +28,6 @@ class RecentController(
     ): ResponseEntity<List<PostResponseDto>> {
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(resentService.getRecentList(page, size))
+            .body(trendService.getTrendList(page, size))
     }
 }

@@ -45,4 +45,19 @@ class PostServiceImpl(
             ?.let { postRepository.delete(it) }
             ?: throw ModelNotFoundException("post", postId)
     }
+
+    override fun getRecentList(
+        page: Int,
+        size: Int
+    ): List<PostResponseDto> {
+        return postRepository.findAllByOrderByCreateAtDesc(PageRequest.of(page, size))
+            .map { PostEntity.toResponse(it) }
+    }
+
+    override fun getTrendList(
+        page: Int,
+        size: Int
+    ): List<PostResponseDto> {
+        return postRepository.findAllByOrderByViewsDesc(PageRequest.of(page, size)).map { PostEntity.toResponse(it) }
+    }
 }
