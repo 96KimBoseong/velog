@@ -6,13 +6,9 @@ import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
-import org.springframework.http.HttpStatusCode
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.security.core.annotation.AuthenticationPrincipal
+import org.springframework.web.bind.annotation.*
 
 @Tag(name = "users", description = "사용자 API")
 @RestController("users")
@@ -45,4 +41,21 @@ class UserController(
             .status(HttpStatus.OK)
             .body(userService.login(userLoginDto))
     }
+
+    // 팔로우 기능
+    @Operation(summary = "팔로우하기" , description = "관련 Service에 필요한 정보를 넘기며 호출")
+    @GetMapping("/user/{pageUserId}")
+    fun profile(
+        @PathVariable pageUserId: Int,
+        model: Model,
+        @AuthenticationPrincipal customUserDetails: CustomUserDetails
+    ): String? {
+        val userProfileDto: UserProfileDto = userService.profile(pageUserId, customUserDetails.getUser().getId())
+        model.addAttribute("dto", userProfileDto)
+
+        return "user/profile"
+    }
+
+
+
 }

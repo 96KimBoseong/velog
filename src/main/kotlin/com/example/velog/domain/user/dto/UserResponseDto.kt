@@ -7,4 +7,8 @@ data class UserResponseDto(
     val userId: Long,
     val userName: String,
     val userEmail: String,
+
+    var followState:Boolean,
+    var followCount:Int,
+
 )
