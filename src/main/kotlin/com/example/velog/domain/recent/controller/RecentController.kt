@@ -11,15 +11,14 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
-@Tag(name = "recent", description = "최근에 만들어진 게시글을 보여주는 API") //Swagger에서 확인할 수 있도록 설명 추가
-@RequestMapping("/recent") //베이스 URI 지정
-@RestController //RecentController를 Control layer를 담당하는 Bean으로 등록
+@Tag(name = "recent", description = "최근에 만들어진 게시글을 보여주는 API")
+@RequestMapping("/recent")
+@RestController
 class RecentController(
     private val resentService: RecentService
 ) {
-    @Operation(summary = "게시글 목록 조회", description = "게시글 목록을 가져옵니다.") //Swagger에서 확인할 수 있도록 설명 추가
-    @GetMapping //Get 메소드 핸들링, /recent에 접근한다.
-
+    @Operation(summary = "게시글 목록 조회", description = "게시글 목록을 가져옵니다.")
+    @GetMapping
     fun getPostList(
         @RequestParam(name = "page", defaultValue = "0")
         page: Int,
@@ -28,7 +27,7 @@ class RecentController(
         size: Int
     ): ResponseEntity<List<PostResponseDto>> {
         return ResponseEntity
-            .status(HttpStatus.OK) //조회 성공하면 200 OK 상태 코드 반환
+            .status(HttpStatus.OK)
             .body(resentService.getRecentList(page, size))
     }
 }

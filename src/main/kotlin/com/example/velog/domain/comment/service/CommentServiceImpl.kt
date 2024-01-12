@@ -42,7 +42,11 @@ class CommentServiceImpl(
     }
 
     @Transactional
-    override fun updateComment(updateCommentArguments: UpdateCommentArguments, postId: Long, commentId: Long): CommentDto {
+    override fun updateComment(
+        updateCommentArguments: UpdateCommentArguments,
+        postId: Long,
+        commentId: Long
+    ): CommentDto {
         val foundComment = commentRepository.findByPostIdAndCommentId(postId, commentId)
             ?: throw ModelNotFoundException("comment", commentId)
 

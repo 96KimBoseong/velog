@@ -17,7 +17,7 @@ data class UserSignUpDto(
     val userName: String,
 
     @field:Email(message = "올바른 이메일 주소를 입력해주세요")
-    @field:NotNull(message = "이메일은 필수 입력값입니다.") //@Email 어노테이션은 null이 포함될 수 있기 때문에 이걸 붙여야 함
+    @field:NotNull(message = "이메일은 필수 입력값입니다.")
     @Schema(description = "회원가입할 때 사용할 이메일", example = "test@gmail.com")
     val userEmail: String,
 

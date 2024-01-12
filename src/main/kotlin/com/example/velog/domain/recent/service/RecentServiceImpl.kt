@@ -9,12 +9,13 @@ import org.springframework.stereotype.Service
 @Service
 class RecentServiceImpl(
     private val recentRepository: RecentRepository
-):RecentService {
+) : RecentService {
 
     override fun getRecentList(
         page: Int,
         size: Int
     ): List<PostResponseDto> {
-        return recentRepository.findAllByOrderByCreateAtDesc(PageRequest.of(page, size)).map { PostEntity.toResponse(it) }
+        return recentRepository.findAllByOrderByCreateAtDesc(PageRequest.of(page, size))
+            .map { PostEntity.toResponse(it) }
     }
 }
