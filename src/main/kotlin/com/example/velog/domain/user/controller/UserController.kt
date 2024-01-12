@@ -42,7 +42,7 @@ class UserController(
             .body(userService.login(userLoginDto))
     }
 
-    // 팔로우 기능
+    // 팔로우 기능추가
     @Operation(summary = "팔로우하기" , description = "관련 Service에 필요한 정보를 넘기며 호출")
     @GetMapping("/user/{pageUserId}")
     fun profile(
