@@ -10,4 +10,6 @@ interface PostService {
     fun getPost(postId: Long): PostDetailResponseDto
     fun updatePost(postId: Long, requestDto: UpdatePostRequestDto): PostResponseDto
     fun deletePost(postId: Long)
+    fun getRecentList(page: Int, size: Int): List<PostResponseDto>
+    fun getTrendList(page: Int, size: Int): List<PostResponseDto>
 }
