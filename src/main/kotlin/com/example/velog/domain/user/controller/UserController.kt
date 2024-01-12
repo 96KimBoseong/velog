@@ -1,12 +1,15 @@
 package com.example.velog.domain.user.controller
 
 import com.example.velog.domain.user.dto.*
+import com.example.velog.domain.user.dto.TokenInfoDto
+import com.example.velog.domain.user.dto.UserLoginDto
+import com.example.velog.domain.user.dto.UserResponseDto
 import com.example.velog.domain.user.service.UserService
 import io.swagger.v3.oas.annotations.Operation
+import com.example.velog.domain.user.dto.UserSignUpDto
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
-import org.springframework.http.HttpStatusCode
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -45,4 +48,5 @@ class UserController(
             .status(HttpStatus.OK)
             .body(userService.login(userLoginDto))
     }
-}
+
+} // END
