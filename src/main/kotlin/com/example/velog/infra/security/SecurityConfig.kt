@@ -18,11 +18,14 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 class SecurityConfig(
     private val tokenProvider: TokenProvider
-){
+) {
     private val allowedUrls = arrayOf(
         "/", "/swagger-ui/**", "/v3/**",
-        "/signup", "/login", "posts/{postId}",
-        "/recent", "/trend"
+        "/posts/{postId}", "/recent", "/trend"
+    )
+
+    private val anonymousUrls = arrayOf(
+        "/signup", "/login",
     )
 
     @Bean
@@ -39,6 +42,7 @@ class SecurityConfig(
 
             .authorizeHttpRequests {
                 it.requestMatchers(*allowedUrls).permitAll()
+                    .requestMatchers(*anonymousUrls).anonymous() //익명 사용자만 접근 가능
                     .anyRequest().authenticated()
             }
             .addFilterBefore(

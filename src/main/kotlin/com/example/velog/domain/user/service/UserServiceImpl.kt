@@ -27,18 +27,20 @@ class UserServiceImpl(
 
     override fun login(userLoginDto: UserLoginDto): TokenInfoDto {
         val authenticationToken = UsernamePasswordAuthenticationToken(userLoginDto.email, userLoginDto.password)
-        return authenticationManagerBuilder.`object`.authenticate(authenticationToken)
+        return authenticationManagerBuilder
+            .`object`
+            .authenticate(authenticationToken)
             .let { tokenProvider.createToken(it) }
     }
 
-    @Transactional
+//    @Transactional
     override fun updateUser(
         userId: Long,
         userUpdateDto: UserUpdateDto
     ): UserResponseDto {
         return userRepository.findByIdOrNull(userId)
             ?.apply { updateUserprofile(userUpdateDto) }
-            ?.let { UserEntity.toResponse(it) }
+            ?.let { UserEntity.toResponse(userRepository.saveAndFlush(it)) }
             ?: throw ModelNotFoundException("user", userId)
     }
 }
