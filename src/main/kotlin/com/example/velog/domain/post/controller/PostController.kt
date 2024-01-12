@@ -5,12 +5,15 @@ import com.example.velog.domain.post.dto.PostDetailResponseDto
 import com.example.velog.domain.post.dto.PostResponseDto
 import com.example.velog.domain.post.service.PostService
 import com.example.velog.domain.post.dto.UpdatePostRequestDto
+import com.example.velog.domain.user.model.UserEntity
+import com.example.velog.domain.user.service.CustomUserDetailService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
+import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
 
 @Tag(name = "posts", description = "게시글 API")
@@ -19,13 +22,13 @@ import org.springframework.web.bind.annotation.*
 class PostController(
     private val postService: PostService
 ) {
-
     @PreAuthorize("hasRole('MEMBER')")
     @Operation(summary = "게시글 작성", description = "게시글을 작성합니다.")
     @PostMapping
     fun createPost(
-        @Valid @RequestBody requestDto: CreatePostRequestDto
+        @Valid @RequestBody requestDto: CreatePostRequestDto,
     ): ResponseEntity<PostResponseDto> {
+
         return ResponseEntity
             .status(HttpStatus.CREATED)
             .body(postService.createPost(requestDto))
@@ -46,7 +49,7 @@ class PostController(
     @PutMapping("/{postId}")
     fun updatePost(
         @PathVariable postId: Long,
-        @Valid @RequestBody requestDto: UpdatePostRequestDto
+        @Valid @RequestBody requestDto: UpdatePostRequestDto,
     ): ResponseEntity<PostResponseDto> {
         return ResponseEntity
             .status(HttpStatus.OK)

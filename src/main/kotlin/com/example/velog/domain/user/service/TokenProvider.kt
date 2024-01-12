@@ -41,10 +41,10 @@ class TokenProvider(
         val refreshExpiration = Date(now.time + refreshExpiration)
 
         val accessToken: String = Jwts.builder()
-            .setSubject((authentication.principal as CustomUser).email)
+            .setSubject(authentication.name)
             .claim("auth", authorities)
-            .claim("userId", (authentication.principal as CustomUser).userId)
-            .claim("name", authentication.name)
+            .claim("name", (authentication.principal as CustomUser).name)
+            .claim("email", (authentication.principal as CustomUser).email)
             .setIssuedAt(now)
             .setExpiration(accessExpiration)
             .signWith(key, SignatureAlgorithm.HS256)
@@ -64,24 +64,24 @@ class TokenProvider(
         val claims: Claims = getClaims(accessToken)
 
         val auth = claims["auth"] ?: throw RuntimeException("잘못된 토큰입니다.")
-        val userId = claims["userId"] ?: throw RuntimeException("잘못된 토큰입니다.")
-        val userName = claims["name"] ?: throw RuntimeException("잘못된 토큰입니다.")
+        val name = claims["name"] ?: throw RuntimeException("잘못된 토큰입니다.")
+        val email = claims["email"] ?: throw RuntimeException("잘못된 토큰입니다.")
 
         val authorities: Collection<GrantedAuthority> = (auth as String)
             .split(",")
             .map { SimpleGrantedAuthority(it) }
 
-        val principal: UserDetails = CustomUser(
-            userId.toString().toLong(),
-            claims.subject, //email
-            userName.toString(), //userName
+        val principal: UserDetails = CustomUser.createUserDetails(
+            email.toString(),
+            name.toString(),
+            claims.subject, //userId가 들어있음
             "",
-            authorities //ROLE_MEMBER
+            authorities
         )
         return UsernamePasswordAuthenticationToken(principal, "", authorities)
     }
 
-    fun validateToken(token: String): Boolean {
+    fun validateToken(token: String): Boolean { //에러 객체를 밖에까지 들고가야 됨
         try {
             getClaims(token)
             return true

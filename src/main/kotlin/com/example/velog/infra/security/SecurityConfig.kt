@@ -1,5 +1,7 @@
 package com.example.velog.infra.security
 
+import com.example.velog.domain.exception.JwtAccessDeniedHandler
+import com.example.velog.domain.exception.JwtAuthenticationEntryPoint
 import com.example.velog.domain.user.service.JwtAuthenticationFilter
 import com.example.velog.domain.user.service.TokenProvider
 import org.springframework.context.annotation.Bean
@@ -17,7 +19,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity
 @EnableWebSecurity
 class SecurityConfig(
-    private val tokenProvider: TokenProvider
+    private val tokenProvider: TokenProvider,
+    private val jwtAuthenticationEntryPoint: JwtAuthenticationEntryPoint,
+    private val jwtAccessDeniedHandler: JwtAccessDeniedHandler
 ) {
     private val allowedUrls = arrayOf(
         "/", "/swagger-ui/**", "/v3/**",
@@ -49,6 +53,9 @@ class SecurityConfig(
                 JwtAuthenticationFilter(tokenProvider),
                 UsernamePasswordAuthenticationFilter::class.java
             )
+            .exceptionHandling {
+                it.authenticationEntryPoint(jwtAuthenticationEntryPoint).accessDeniedHandler(jwtAccessDeniedHandler)
+            }
         return http.build()
     }
 

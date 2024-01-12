@@ -5,6 +5,7 @@ import com.example.velog.domain.user.dto.*
 import com.example.velog.domain.user.model.UserEntity
 import com.example.velog.domain.user.repository.UserRepository
 import org.springframework.data.repository.findByIdOrNull
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -33,7 +34,7 @@ class UserServiceImpl(
             .let { tokenProvider.createToken(it) }
     }
 
-//    @Transactional
+    @Transactional
     override fun updateUser(
         userId: Long,
         userUpdateDto: UserUpdateDto

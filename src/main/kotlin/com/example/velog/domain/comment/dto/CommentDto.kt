@@ -10,8 +10,8 @@ data class CommentDto(
     val content: String,
     val createAt: LocalDateTime?,
     val updateAt: LocalDateTime?,
-    val updateName: String,
-    val createName: String,
+    val updateName: String?,
+    val createName: String?,
     val postId: Long?
 ) {
     companion object {

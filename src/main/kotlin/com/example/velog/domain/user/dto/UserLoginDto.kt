@@ -15,8 +15,8 @@ data class UserLoginDto(
 
     @field:NotBlank(message = "비밀번호를 입력해주세요")
     @field:Pattern(
-        regexp = "^[a-zA-Z0-9]{8,25}$",
-        message = "비밀번호는 영어와 숫자로 이루어진 8~25자리 문자열로 입력해야 합니다."
+        regexp = "^[a-zA-Z0-9!@#\$%^&*]{8,25}$",
+        message = "비밀번호는 영어, 숫자, 특수문자로 이루어진 8~25자리 문자열로 입력해야 합니다."
     )
     @Schema(description = "로그인할 때 사용할 비밀번호", example = "12345678")
     val password: String

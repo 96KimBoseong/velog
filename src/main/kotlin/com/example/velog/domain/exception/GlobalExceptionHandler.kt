@@ -35,14 +35,28 @@ class GlobalExceptionHandler {
     @ExceptionHandler(BadCredentialsException::class)
     fun handleMethodBadCredentialsException(e: BadCredentialsException): ResponseEntity<ErrorResponseDto> {
         return ResponseEntity
-            .status(HttpStatus.BAD_REQUEST)
+            .status(HttpStatus.UNAUTHORIZED)
             .body(ErrorResponseDto("아이디 또는 비밀번호를 확인해주세요."))
     }
 
     @ExceptionHandler(DataIntegrityViolationException::class)
     fun handleDataIntegrityViolationException(e: DataIntegrityViolationException): ResponseEntity<ErrorResponseDto>{
         return ResponseEntity
-            .status(HttpStatus.BAD_REQUEST)
+            .status(HttpStatus.CONFLICT) //중복된 값이 있을 때 사용
             .body(ErrorResponseDto("이미 사용중인 이메일입니다. 해당 이메일로 수정할 수 없습니다."))
+    }
+
+    @ExceptionHandler(AuthException::class)
+    fun handleAuthException(e: AuthException): ResponseEntity<ErrorResponseDto> {
+        return ResponseEntity
+            .status(HttpStatus.UNAUTHORIZED)
+            .body(ErrorResponseDto(e.message))
+    }
+
+    @ExceptionHandler(ForbiddenException::class)
+    fun handleForbiddenException(e: ForbiddenException): ResponseEntity<ErrorResponseDto>{
+        return ResponseEntity
+            .status(HttpStatus.FORBIDDEN)
+            .body(ErrorResponseDto(e.message))
     }
 }

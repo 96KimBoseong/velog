@@ -6,7 +6,9 @@ import com.example.velog.domain.post.dto.PostDetailResponseDto
 import com.example.velog.domain.post.dto.PostResponseDto
 import com.example.velog.domain.post.dto.UpdatePostRequestDto
 import jakarta.persistence.*
+import org.springframework.data.annotation.CreatedBy
 import org.springframework.data.annotation.CreatedDate
+import org.springframework.data.annotation.LastModifiedBy
 import org.springframework.data.annotation.LastModifiedDate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import java.time.LocalDateTime
@@ -20,12 +22,6 @@ class PostEntity private constructor(
 
     @Column(name = "content")
     var content: String,
-
-    @Column(name = "create_name")
-    var createName: String,
-
-    @Column(name = "update_name")
-    var updateName: String,
 
     @OneToMany(mappedBy = "postId", fetch = FetchType.LAZY, cascade = [CascadeType.ALL], orphanRemoval = true)
     var comments: MutableList<CommentEntity> = mutableListOf()
@@ -42,6 +38,14 @@ class PostEntity private constructor(
     @Column(name = "update_at")
     var updateAt: LocalDateTime? = null
 
+    @CreatedBy
+    @Column(name = "create_name")
+    var createName: String? = null
+
+    @LastModifiedBy
+    @Column(name = "update_name")
+    var updateName: String? = null
+
     @Column(name = "views")
     var views: Int = 0
 
@@ -50,7 +54,6 @@ class PostEntity private constructor(
     fun updateEntity(requestDto: UpdatePostRequestDto) {
         this.title = requestDto.title
         this.content = requestDto.content
-        this.updateName = requestDto.updateName
     }
 
     companion object {
@@ -59,9 +62,7 @@ class PostEntity private constructor(
         ): PostEntity {
             return PostEntity(
                 title = requestDto.title,
-                content = requestDto.content,
-                createName = requestDto.createName,
-                updateName = requestDto.createName
+                content = requestDto.content
             )
         }
 
@@ -74,8 +75,8 @@ class PostEntity private constructor(
                 content = postEntity.content,
                 createAt = postEntity.createAt!!,
                 updateAt = postEntity.updateAt!!,
-                createName = postEntity.createName,
-                updateName = postEntity.updateName,
+                createName = postEntity.createName!!,
+                updateName = postEntity.updateName!!,
                 views = postEntity.views
             )
         }
@@ -89,8 +90,8 @@ class PostEntity private constructor(
                 content = postEntity.content,
                 createAt = postEntity.createAt!!,
                 updateAt = postEntity.updateAt!!,
-                createName = postEntity.createName,
-                updateName = postEntity.updateName,
+                createName = postEntity.createName!!,
+                updateName = postEntity.updateName!!,
                 views = postEntity.views,
                 comments = postEntity.comments
             )

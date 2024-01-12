@@ -22,8 +22,6 @@ class CommentServiceImpl(
             ?: throw ModelNotFoundException("post", postId)
         val commentEntity = CommentEntity(
             content = creatCommentArguments.content,
-            createName = creatCommentArguments.createName,
-            updateName = "",
             postId = targetPost.postId!!
         )
         val result = commentRepository.save(commentEntity)

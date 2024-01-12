@@ -61,8 +61,7 @@ class CommentController(
         @Valid @RequestBody updateCommentArguments: UpdateCommentArguments
     ): ResponseEntity<CommentDto> {
         val arguments = UpdateCommentArguments(
-            content = updateCommentArguments.content,
-            updateName = updateCommentArguments.updateName
+            content = updateCommentArguments.content
         )
         val comment = commentService.updateComment(arguments, postId, commentId)
         return ResponseEntity
