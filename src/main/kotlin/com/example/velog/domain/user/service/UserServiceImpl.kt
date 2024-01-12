@@ -17,6 +17,7 @@ class UserServiceImpl(
     private val encoder: PasswordEncoder,
     private val tokenProvider: TokenProvider,
     private val authenticationManagerBuilder: AuthenticationManagerBuilder
+
 ) : UserService {
     @Transactional
     override fun signUp(userSignUpDto: UserSignUpDto): UserResponseDto {
