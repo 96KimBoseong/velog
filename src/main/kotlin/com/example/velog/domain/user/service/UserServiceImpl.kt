@@ -21,8 +21,8 @@ class UserServiceImpl(
     private val encoder: PasswordEncoder,
     private val tokenProvider: TokenProvider,
     private val authenticationManagerBuilder: AuthenticationManagerBuilder
-) : UserService {
 
+) : UserService {
     @Transactional
     override fun signUp(userSignUpDto: UserSignUpDto): UserResponseDto {
         if (userRepository.existsByEmail(userSignUpDto.userEmail)) throw IllegalStateException("가입된 이메일 입니다.")

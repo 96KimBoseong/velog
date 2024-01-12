@@ -47,7 +47,6 @@ dependencies {
     implementation("io.jsonwebtoken:jjwt-api:0.11.2")
     implementation("org.springframework.boot:spring-boot-starter-validation")
 
-    implementation("org.springframework.boot:spring-boot-starter-data-redis") // 메일인증시간 계산 및 인증번호
     implementation("org.springframework.boot:spring-boot-starter-mail") //메일을 사용자에게 보내기위함
 
 
