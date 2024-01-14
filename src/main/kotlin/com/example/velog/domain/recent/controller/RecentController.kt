@@ -31,3 +31,4 @@ class RecentController(
             .body(resentService.getRecentList(page, size))
     }
 }
+//controller패키지안에 여러개 둬도 ㄱㅊ 알아서 찾아감 ㄱㅊㄱㅊ
