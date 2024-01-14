@@ -1,5 +1,7 @@
 package com.example.velog.infra.security
 
+import com.example.velog.domain.exception.JwtAccessDeniedHandler
+import com.example.velog.domain.exception.JwtAuthenticationEntryPoint
 import com.example.velog.domain.user.service.JwtAuthenticationFilter
 import com.example.velog.domain.user.service.TokenProvider
 import org.springframework.context.annotation.Bean
@@ -17,12 +19,17 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity
 @EnableWebSecurity
 class SecurityConfig(
-    private val tokenProvider: TokenProvider
-){
+    private val tokenProvider: TokenProvider,
+    private val jwtAuthenticationEntryPoint: JwtAuthenticationEntryPoint,
+    private val jwtAccessDeniedHandler: JwtAccessDeniedHandler
+) {
     private val allowedUrls = arrayOf(
         "/", "/swagger-ui/**", "/v3/**",
-        "/signup", "/login", "posts/{postId}",
-        "/recent", "/trend"
+        "/posts/{postId}", "/recent", "/trend"
+    )
+
+    private val anonymousUrls = arrayOf(
+        "/signup", "/login",
     )
 
     @Bean
@@ -39,12 +46,16 @@ class SecurityConfig(
 
             .authorizeHttpRequests {
                 it.requestMatchers(*allowedUrls).permitAll()
+                    .requestMatchers(*anonymousUrls).anonymous() //익명 사용자만 접근 가능
                     .anyRequest().authenticated()
             }
             .addFilterBefore(
                 JwtAuthenticationFilter(tokenProvider),
                 UsernamePasswordAuthenticationFilter::class.java
             )
+            .exceptionHandling {
+                it.authenticationEntryPoint(jwtAuthenticationEntryPoint).accessDeniedHandler(jwtAccessDeniedHandler)
+            }
         return http.build()
     }
 

@@ -1,5 +1,6 @@
 package com.example.velog.domain.user.controller
 
+import com.example.velog.domain.exception.ForbiddenException
 import com.example.velog.domain.user.dto.*
 import com.example.velog.domain.user.dto.TokenInfoDto
 import com.example.velog.domain.user.dto.UserLoginDto
@@ -7,10 +8,12 @@ import com.example.velog.domain.user.dto.UserResponseDto
 import com.example.velog.domain.user.service.UserService
 import io.swagger.v3.oas.annotations.Operation
 import com.example.velog.domain.user.dto.UserSignUpDto
+import com.example.velog.domain.user.model.CustomUser
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
@@ -34,8 +37,10 @@ class UserController(
     @PutMapping("/{userId}")
     fun userUpdate(
         @PathVariable userId: Long,
-        @RequestBody userUpdateDto: UserUpdateDto
+        @Valid @RequestBody userUpdateDto: UserUpdateDto,
+        @AuthenticationPrincipal user: CustomUser
     ): ResponseEntity<UserResponseDto> {
+        if (user.username.toLong() != userId) throw ForbiddenException("You don't have permission to access.")
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(userService.updateUser(userId, userUpdateDto))
@@ -49,5 +54,4 @@ class UserController(
             .body(userService.login(userLoginDto))
     }
 
-
-} // END
+}

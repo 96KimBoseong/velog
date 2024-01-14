@@ -13,6 +13,7 @@ data class UserUpdateDto(
         regexp = "^[ㄱ-ㅎ|가-힣]{2,10}$",
         message = "이름은 2~10자리 한글이여야 합니다."
     )
+    @Schema(description = "회원정보를 수정할 때 사용할 이름", example = "황승현")
     val userName: String,
 
     @field:Email(message = "올바른 이메일 주소를 입력해주세요")

@@ -1,6 +1,7 @@
 package com.example.velog.domain.user.service
 
 import com.example.velog.domain.user.dto.TokenInfoDto
+import com.example.velog.domain.user.model.CustomUser
 import io.jsonwebtoken.*
 import io.jsonwebtoken.io.Decoders
 import io.jsonwebtoken.security.Keys
@@ -42,6 +43,8 @@ class TokenProvider(
         val accessToken: String = Jwts.builder()
             .setSubject(authentication.name)
             .claim("auth", authorities)
+            .claim("name", (authentication.principal as CustomUser).name)
+            .claim("email", (authentication.principal as CustomUser).email)
             .setIssuedAt(now)
             .setExpiration(accessExpiration)
             .signWith(key, SignatureAlgorithm.HS256)
@@ -60,17 +63,25 @@ class TokenProvider(
         //JWT 복호화
         val claims: Claims = getClaims(accessToken)
 
-        val auth = claims["auth"] ?: throw RuntimeException("This is an unauthenticated token")
+        val auth = claims["auth"] ?: throw RuntimeException("잘못된 토큰입니다.")
+        val name = claims["name"] ?: throw RuntimeException("잘못된 토큰입니다.")
+        val email = claims["email"] ?: throw RuntimeException("잘못된 토큰입니다.")
 
         val authorities: Collection<GrantedAuthority> = (auth as String)
             .split(",")
             .map { SimpleGrantedAuthority(it) }
 
-        val principal: UserDetails = User(claims.subject, "", authorities)
+        val principal: UserDetails = CustomUser.createUserDetails(
+            email.toString(),
+            name.toString(),
+            claims.subject, //userId가 들어있음
+            "",
+            authorities
+        )
         return UsernamePasswordAuthenticationToken(principal, "", authorities)
     }
 
-    fun validateToken(token: String): Boolean {
+    fun validateToken(token: String): Boolean { //에러 객체를 밖에까지 들고가야 됨
         try {
             getClaims(token)
             return true

@@ -5,15 +5,19 @@ import com.example.velog.domain.post.dto.CreatePostRequestDto
 import com.example.velog.domain.post.dto.PostDetailResponseDto
 import com.example.velog.domain.post.dto.PostResponseDto
 import com.example.velog.domain.post.dto.UpdatePostRequestDto
+import com.example.velog.domain.user.model.CustomUser
 import jakarta.persistence.*
+import org.springframework.data.annotation.CreatedBy
 import org.springframework.data.annotation.CreatedDate
+import org.springframework.data.annotation.LastModifiedBy
 import org.springframework.data.annotation.LastModifiedDate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import java.time.LocalDateTime
 
 @EntityListeners(AuditingEntityListener::class)
 @Entity
-@Table(name = "post")
+//@Table(name = "post")
+@Table(name = "post2")
 class PostEntity private constructor(
     @Column(name = "title")
     var title: String,
@@ -21,11 +25,8 @@ class PostEntity private constructor(
     @Column(name = "content")
     var content: String,
 
-    @Column(name = "create_name")
-    var createName: String,
-
-    @Column(name = "update_name")
-    var updateName: String,
+    @Column(name = "user_id")
+    val userId: Long,
 
     @OneToMany(mappedBy = "postId", fetch = FetchType.LAZY, cascade = [CascadeType.ALL], orphanRemoval = true)
     var comments: MutableList<CommentEntity> = mutableListOf()
@@ -42,6 +43,14 @@ class PostEntity private constructor(
     @Column(name = "update_at")
     var updateAt: LocalDateTime? = null
 
+    @CreatedBy
+    @Column(name = "create_name")
+    var createName: String? = null
+
+    @LastModifiedBy
+    @Column(name = "update_name")
+    var updateName: String? = null
+
     @Column(name = "views")
     var views: Int = 0
 
@@ -50,18 +59,17 @@ class PostEntity private constructor(
     fun updateEntity(requestDto: UpdatePostRequestDto) {
         this.title = requestDto.title
         this.content = requestDto.content
-        this.updateName = requestDto.updateName
     }
 
     companion object {
         fun toEntity(
-            requestDto: CreatePostRequestDto
+            requestDto: CreatePostRequestDto,
+            user: CustomUser
         ): PostEntity {
             return PostEntity(
                 title = requestDto.title,
                 content = requestDto.content,
-                createName = requestDto.createName,
-                updateName = requestDto.createName
+                userId = user.username.toLong()
             )
         }
 
@@ -74,8 +82,8 @@ class PostEntity private constructor(
                 content = postEntity.content,
                 createAt = postEntity.createAt!!,
                 updateAt = postEntity.updateAt!!,
-                createName = postEntity.createName,
-                updateName = postEntity.updateName,
+                createName = postEntity.createName!!,
+                updateName = postEntity.updateName!!,
                 views = postEntity.views
             )
         }
@@ -89,8 +97,8 @@ class PostEntity private constructor(
                 content = postEntity.content,
                 createAt = postEntity.createAt!!,
                 updateAt = postEntity.updateAt!!,
-                createName = postEntity.createName,
-                updateName = postEntity.updateName,
+                createName = postEntity.createName!!,
+                updateName = postEntity.updateName!!,
                 views = postEntity.views,
                 comments = postEntity.comments
             )
