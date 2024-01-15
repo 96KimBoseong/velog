@@ -18,7 +18,7 @@
 
 ## 👨🏻‍💻 Built With
 
-* [김보성](https://github.com/96KimBoseong) - 팀장, 와이어프레임 작성 
-* [박현석](https://github.com/justhyeonseok) - 조원, API명세서 작성
-* [김성민](https://github.com/kr01126kr) - 조원, 노션 페이지 작성
-* [황승현](https://github.com/HwangSeungHyeon) - 조원, ERD 작성, README.md 작성
+* [김보성](https://github.com/96KimBoseong) - 팀장, 와이어프레임 작성 ,프로필 수정
+* [박현석](https://github.com/justhyeonseok) - 조원, API명세서 작성, 댓글 CRUD기능 
+* [김성민](https://github.com/kr01126kr) - 조원, 노션 페이지 작성 datebase 연동 및 수정, 발표
+* [황승현](https://github.com/HwangSeungHyeon) - 조원, ERD 작성, README.md 작성, 게시물CRUD기능 , 사용자 인증/인가
